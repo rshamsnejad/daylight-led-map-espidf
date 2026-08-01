@@ -45,26 +45,26 @@ void led_task(void *pvParameter)
     while(1){
         if(on){
 
-            // Display Magenta => Yellow rainbow arc
-            int red = 0, green = 0, blue = 0;
+            // // Display Magenta => Yellow rainbow arc
+            // int red = 0, green = 0, blue = 0;
 
-            for(int i = 0 ; i < 512 ; i += 1)
-            {
-                if(i < 256)
-                {
-                    red = 255;
-                    green = 0;
-                    blue = 255 - i;
-                }
-                else
-                {
-                    red = 255;
-                    green = i - 256;
-                    blue = 0;
-                }
+            // for(int i = 0 ; i < 512 ; i += 1)
+            // {
+            //     if(i < 256)
+            //     {
+            //         red = 255;
+            //         green = 0;
+            //         blue = 255 - i;
+            //     }
+            //     else
+            //     {
+            //         red = 255;
+            //         green = i - 256;
+            //         blue = 0;
+            //     }
 
-                led_strip_set_pixel(led_strip, i, red, green, blue);
-            }
+            //     led_strip_set_pixel(led_strip, i, red, green, blue);
+            // }
             
             // // Display black to white gradient
             // for(int i = 0 ; i < 512 ; i += 1)
@@ -74,8 +74,8 @@ void led_task(void *pvParameter)
             //     led_strip_set_pixel(led_strip, i, j, j, j);
             // }
 
-            // // Display passed colors
-            // led_strip_set_pixel(led_strip, args->index, args->red, args->green, args->blue);
+            // Display passed colors
+            led_strip_set_pixel(led_strip, args->index, args->red, args->green, args->blue);
         }
         else{
             led_strip_clear(led_strip);

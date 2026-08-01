@@ -5,6 +5,7 @@
 
 #include "global.h"
 #include "led_task.h"
+#include "clock_task.h"
 
 #include "driver/gpio.h"
 #define STRIP_GPIO GPIO_NUM_2
@@ -30,6 +31,17 @@ void app_main()
         "led_task", // task name
         2048,           // stack size in words
         &led1_task_parameters,  // pointer to parameters
+        5,              // priority
+        NULL);          // out pointer to task handle
+    
+    
+    clock_task_init(NULL);
+
+    xTaskCreate(
+        &clock_task,      // task function
+        "clock_task", // task name
+        2048,           // stack size in words
+        NULL,  // pointer to parameters
         5,              // priority
         NULL);          // out pointer to task handle
 }
