@@ -1,94 +1,62 @@
 {
   "version": 1,
-  "author": "Benny Meisels",
+  "author": "Uri Shaked",
   "editor": "wokwi",
   "parts": [
     {
       "type": "board-esp32-c3-devkitm-1",
       "id": "esp",
-      "top": 4.7,
-      "left": 4.6,
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-neopixel-canvas",
+      "id": "matrix1",
+      "top": -400,
+      "left": -600,
+      "rotate": 0,
       "attrs": {
-        "builder": "esp-idf"
+        "rows": "16",
+        "cols": "16",
+        "pixelate": "circle"
       }
     },
     {
-      "type": "wokwi-led",
-      "id": "led-red",
-      "top": -3.6,
-      "left": 120,
+      "type": "wokwi-neopixel-canvas",
+      "id": "matrix2",
+      "top": -400,
+      "left": -230,
+      "rotate": 0,
       "attrs": {
-        "color": "red"
+        "rows": "16",
+        "cols": "16",
+        "pixelate": "circle"
       }
     },
     {
-      "type": "wokwi-led",
-      "id": "led-green",
-      "top": -3.6,
-      "left": 148.8,
-      "attrs": {
-        "color": "green"
-      }
-    },
-    {
-      "type": "wokwi-led",
-      "id": "led-blue",
-      "top": -3.6,
-      "left": 177.6,
+      "type": "wokwi-tm1637-7segment",
+      "id": "clock",
+      "top": 200,
+      "left": -300,
       "attrs": {
         "color": "blue"
       }
     }
   ],
   "connections": [
-    [
-      "esp:TX",
-      "$serialMonitor:RX",
-      "",
-      []
-    ],
-    [
-      "esp:RX",
-      "$serialMonitor:TX",
-      "",
-      []
-    ],
-    [
-      "esp:GND.9",
-      "led-red:C",
-      "black",
-      []
-    ],
-    [
-      "esp:GND.9",
-      "led-green:C",
-      "black",
-      []
-    ],
-    [
-      "esp:GND.9",
-      "led-blue:C",
-      "black",
-      []
-    ],
-    [
-      "esp:6",
-      "led-red:A",
-      "#ff4500",
-      []
-    ],
-    [
-      "esp:5",
-      "led-green:A",
-      "green",
-      []
-    ],
-    [
-      "esp:4",
-      "led-blue:A",
-      "blue",
-      []
-    ]
+    ["esp:TX",       "$serialMonitor:RX", "",       []],
+    ["esp:RX",       "$serialMonitor:TX", "",       []],
+    ["esp:GND.1",    "matrix1:VSS",       "black",  []],
+    ["esp:GND.1",    "matrix2:VSS",       "black",  []],
+    ["esp:5V.1",     "matrix1:VDD",       "red",    []],
+    ["esp:5V.1",     "matrix2:VDD",       "red",    []],
+    ["esp:2",        "matrix1:DIN",       "green",  []],
+    ["matrix1:DOUT", "matrix2:DIN",       "purple", ["*", "v10"]],
+    ["esp:5V.1",     "clock:VCC",         "red",    ["*", "h100"]],
+    ["esp:GND.1",    "clock:GND",         "black",  ["*", "h110"]],
+    ["esp:4",       "clock:CLK",         "yellow",  ["*", "h230"]],
+    ["esp:5",       "clock:DIO",         "green",   ["*", "h240"]]
   ],
   "dependencies": {}
 }

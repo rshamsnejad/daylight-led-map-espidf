@@ -7,13 +7,11 @@
 #include "global.h"
 #include "led_task.h"
 
-#define RMT
-
-void led_task_init(void)
+void led_task_init(void *pvParameter)
 {
     /// LED strip common configuration
     led_strip_config_t strip_config = {
-        .strip_gpio_num = BLINK_GPIO,  // The GPIO that connected to the LED strip's data line
+    .strip_gpio_num = ((led_strip_parameters_t*)pvParameter)->led_gpio,  // The GPIO that connected to the LED strip's data line
         .max_leds = 512,                 // The number of LEDs in the strip,
         .led_model = LED_MODEL_WS2812, // LED strip model, it determines the bit timing
         .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB, // The color component format is G-R-B
@@ -22,7 +20,6 @@ void led_task_init(void)
         }
     };
 
-#ifdef RMT
     /// RMT backend specific configuration
     led_strip_rmt_config_t rmt_config = {
         .clk_src = RMT_CLK_SRC_DEFAULT,    // different clock source can lead to different power consumption
@@ -34,39 +31,59 @@ void led_task_init(void)
     };
 
     /// Create the LED strip object
-    led_strip_handle_t led_strip = NULL;
     ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
-#else
-    // SPI backend specific configuration
-    led_strip_spi_config_t spi_config = {
-        .clk_src = SPI_CLK_SRC_DEFAULT, // different clock source can lead to different power consumption
-        .spi_bus = SPI2_HOST,           // SPI bus ID
-        .flags = {
-            .with_dma = true, // Using DMA can improve performance and help drive more LEDs
-        }
-    };
-
-    /// Create the LED strip object
-    ESP_ERROR_CHECK(led_strip_new_spi_device(&strip_config, &spi_config, &led_strip));
-#endif
 }
 
 void led_task(void *pvParameter)
 {
 
     led_strip_clear(led_strip);
+    led_task_parameters_t* args = (led_task_parameters_t*)pvParameter;
+
     uint8_t on = 0;
+
     while(1){
-        
         if(on){
-            led_strip_set_pixel(led_strip, 1, 100, 100, 100);
+
+            // Display Magenta => Yellow rainbow arc
+            int red = 0, green = 0, blue = 0;
+
+            for(int i = 0 ; i < 512 ; i += 1)
+            {
+                if(i < 256)
+                {
+                    red = 255;
+                    green = 0;
+                    blue = 255 - i;
+                }
+                else
+                {
+                    red = 255;
+                    green = i - 256;
+                    blue = 0;
+                }
+
+                led_strip_set_pixel(led_strip, i, red, green, blue);
+            }
+            
+            // // Display black to white gradient
+            // for(int i = 0 ; i < 512 ; i += 1)
+            // {
+            //     int j = i >= 256 ? i - 256 : i;
+
+            //     led_strip_set_pixel(led_strip, i, j, j, j);
+            // }
+
+            // // Display passed colors
+            // led_strip_set_pixel(led_strip, args->index, args->red, args->green, args->blue);
         }
         else{
-            led_strip_set_pixel(led_strip, 1, 1, 1, 1);
+            led_strip_clear(led_strip);
         }
+        led_strip_refresh(led_strip);
         on = !on;
 
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(args->blink_time / portTICK_PERIOD_MS);
     }
 
     vTaskDelete(NULL);

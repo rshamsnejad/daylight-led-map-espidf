@@ -6,39 +6,30 @@
 #include "global.h"
 #include "led_task.h"
 
-#define LED_RED GPIO_NUM_6
-#define LED_GREEN GPIO_NUM_5
-#define LED_BLUE GPIO_NUM_4
+#include "driver/gpio.h"
+#define STRIP_GPIO GPIO_NUM_2
 
 void app_main()
 {
-    led_task_init();
+    led_strip_parameters_t strip_parameters = {
+        .led_gpio = STRIP_GPIO
+    };
 
-    led_task_parameters_t red_led_gpio = {LED_RED, 2000};
-    led_task_parameters_t blue_led_gpio = {LED_BLUE, 1000};
-    led_task_parameters_t green_led_gpio = {LED_GREEN, 500};
+    led_task_parameters_t led1_task_parameters = {
+        .index = 0,
+        .blink_time = 1000,
+        .red = 255,
+        .green = 255,
+        .blue = 255
+    };
+
+    led_task_init(&strip_parameters);
 
     xTaskCreate(
         &led_task,      // task function
-        "red_led_task", // task name
+        "led_task", // task name
         2048,           // stack size in words
-        &red_led_gpio,  // pointer to parameters
+        &led1_task_parameters,  // pointer to parameters
         5,              // priority
         NULL);          // out pointer to task handle
-
-    xTaskCreate(
-        &led_task,       // task function
-        "blue_led_task", // task name
-        2048,            // stack size in words
-        &blue_led_gpio,  // pointer to parameters
-        5,               // priority
-        NULL);           // out pointer to task handle
-
-    xTaskCreate(
-        &led_task,        // task function
-        "green_led_task", // task name
-        2048,             // stack size in words
-        &green_led_gpio,  // pointer to parameters
-        5,                // priority
-        NULL);            // out pointer to task handle
 }
