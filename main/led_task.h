@@ -1,8 +1,5 @@
 #include "driver/gpio.h"
-
-#define LED_RED GPIO_NUM_6
-#define LED_GREEN GPIO_NUM_5
-#define LED_BLUE GPIO_NUM_4
+#include "led_strip.h"
 
 typedef struct led_task_parameters_t
 {
@@ -10,4 +7,7 @@ typedef struct led_task_parameters_t
     TickType_t blink_time;
 } led_task_parameters_t;
 
+static led_strip_handle_t led_strip = NULL;
+
+void led_task_init(void);
 void led_task(void *pvParameter);
