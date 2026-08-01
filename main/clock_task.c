@@ -31,12 +31,12 @@ void clock_task(void *pvParameter)
     {
         tm1637_set_brightness(handle, 7, true);
         
-        for(int i = 0 ; i <= 9999 ; i += 9)
+        for(int i = 0 ; i <= 9999 ; i += 99)
         {
             tm1637_show_number(handle, i, false, 4, 0);
             ESP_LOGI(TAG, "CLOCK : %d", i);
             
-            vTaskDelay(200 / portTICK_PERIOD_MS);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
         }
     }
     // Clean up

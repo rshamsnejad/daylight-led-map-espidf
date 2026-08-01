@@ -41,6 +41,7 @@ void led_task(void *pvParameter)
     led_task_parameters_t* args = (led_task_parameters_t*)pvParameter;
 
     uint8_t on = 0;
+    uint32_t count = 0;
 
     while(1){
         if(on){
@@ -75,7 +76,8 @@ void led_task(void *pvParameter)
             // }
 
             // Display passed colors
-            led_strip_set_pixel(led_strip, args->index, args->red, args->green, args->blue);
+            led_strip_set_pixel(led_strip, args->index + count, args->red, args->green, args->blue);
+            count += 1;
         }
         else{
             led_strip_clear(led_strip);

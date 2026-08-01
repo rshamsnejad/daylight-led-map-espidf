@@ -18,10 +18,10 @@ void app_main()
 
     led_task_parameters_t led1_task_parameters = {
         .index = 0,
-        .blink_time = 1000,
-        .red = 255,
-        .green = 255,
-        .blue = 255
+        .blink_time = 200,
+        .red = 47,
+        .green = 136,
+        .blue = 0
     };
 
     led_task_init(&strip_parameters);
