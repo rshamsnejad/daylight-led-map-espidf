@@ -2,11 +2,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "esp_log.h"
 
 #define LED_RED GPIO_NUM_6
 #define LED_GREEN GPIO_NUM_5
 #define LED_BLUE GPIO_NUM_4
 
+static const char *TAG = "example";
 typedef struct led_task_parameters_t
 {
     gpio_num_t led_gpio;
@@ -30,7 +32,7 @@ void led_task(void *pvParameter)
         gpio_set_level(led_gpio, led_value);
         led_value = !led_value;
 
-        printf("GPIO %d = %d\n", led_gpio, led_value);
+        ESP_LOGI(TAG, "GPIO %d = %d", led_gpio, led_value);
         vTaskDelay(blink_time / portTICK_PERIOD_MS);
     }
     vTaskDelete(NULL);
