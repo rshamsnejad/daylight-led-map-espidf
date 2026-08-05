@@ -3,34 +3,40 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "driver/gpio.h"
+#define STRIP_GPIO GPIO_NUM_2
+
+#include "wifi_setup.h"
+
 #include "global.h"
 #include "led_task.h"
 #include "clock_task.h"
 
-#include "driver/gpio.h"
-#define STRIP_GPIO GPIO_NUM_2
-
 void app_main()
 {
-    led_strip_parameters_t strip_parameters = {
+    wifi_setup();
+
+    led_strip_parameters_t* p_strip_parameters = malloc(sizeof(led_strip_parameters_t));
+    *p_strip_parameters = (led_strip_parameters_t){
         .led_gpio = STRIP_GPIO
     };
 
-    led_task_parameters_t led1_task_parameters = {
+    led_task_parameters_t* p_led_task_parameters = malloc(sizeof(led_task_parameters_t));
+    *p_led_task_parameters = (led_task_parameters_t){
         .index = 0,
         .blink_time = 200,
-        .red = 47,
-        .green = 136,
-        .blue = 0
+        .red = 255,
+        .green = 0,
+        .blue = 255
     };
 
-    led_task_init(&strip_parameters);
+    led_task_init(p_strip_parameters);
 
     xTaskCreate(
         &led_task,      // task function
         "led_task", // task name
         2048,           // stack size in words
-        &led1_task_parameters,  // pointer to parameters
+        p_led_task_parameters,  // pointer to parameters
         5,              // priority
         NULL);          // out pointer to task handle
     
