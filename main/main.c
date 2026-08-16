@@ -14,7 +14,7 @@
 
 void app_main()
 {
-    wifi_setup();
+    // wifi_setup();
 
     led_strip_parameters_t* p_strip_parameters = malloc(sizeof(led_strip_parameters_t));
     *p_strip_parameters = (led_strip_parameters_t){
