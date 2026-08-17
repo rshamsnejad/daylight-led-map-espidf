@@ -1,5 +1,12 @@
+// Standard headers
+//
+// FreeRTOS headers
+//
+// ESP-IDF headers
 #include "esp_err.h"
-#include "global.h"
+// ESP-IDF Component headers
+//
+// Custom headers
 #include "neopixel_matrix.h"
 
 esp_err_t xy_to_index

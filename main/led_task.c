@@ -1,11 +1,12 @@
+// Standard headers
 #include <time.h>
-
+// FreeRTOS headers
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-
+// ESP-IDF headers
 #include "esp_log.h"
+// ESP-IDF Component headers
 #include "led_strip.h"
-
+// Custom headers
 #include "global.h"
 #include "led_task.h"
 #include "neopixel_matrix.h"

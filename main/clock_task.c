@@ -1,12 +1,14 @@
+// Standard headers
 #include <time.h>
+// FreeRTOS headers
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-
+// ESP-IDF headers
 #include "esp_log.h"
-
+// ESP-IDF Component headers
+#include "tm1637.h"
+// Custom headers
 #include "global.h"
 #include "clock_task.h"
-#include "tm1637.h"
 #include "local_time.h"
 
 void clock_task_init(void *pvParameter)

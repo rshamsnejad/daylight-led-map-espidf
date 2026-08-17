@@ -3,8 +3,16 @@
 #define CLOCK_TASK_H
 ///////////////////////////////////////////////////////////
 
-#include "driver/gpio.h"
+// Standard headers
+//
+// FreeRTOS headers
+//
+// ESP-IDF headers
+//
+// ESP-IDF Component headers
 #include "tm1637.h"
+// Custom headers
+//
 
 typedef struct clock_task_init_parameters_t
 {

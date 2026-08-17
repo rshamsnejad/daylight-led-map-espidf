@@ -3,7 +3,16 @@
 #define WIFI_SETUP_H
 ///////////////////////////////////////////////////////////
 
+// Standard headers
+//
+// FreeRTOS headers
+//
+// ESP-IDF headers
 #include "esp_err.h"
+// ESP-IDF Component headers
+//
+// Custom headers
+//
 
 void wifi_init(void);
 void wifi_free(void);

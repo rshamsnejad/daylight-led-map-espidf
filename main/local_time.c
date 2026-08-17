@@ -1,5 +1,13 @@
+// Standard headers
 #include <stdlib.h>
 #include <time.h>
+// FreeRTOS headers
+//
+// ESP-IDF headers
+//
+// ESP-IDF Component headers
+//
+// Custom headers
 #include "local_time.h"
 
 struct tm get_local_time(time_t now)

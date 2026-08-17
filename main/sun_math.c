@@ -1,12 +1,15 @@
+// Standard headers
 #include <math.h>
 #include <time.h>
-
-#include "esp_err.h"
-
-#include "global.h"
+// FreeRTOS headers
+//
+// ESP-IDF headers
+//
+// ESP-IDF Component headers
+#include <libnova/libnova.h>
+// Custom headers
 #include "sun_math.h"
 
-#include <libnova/libnova.h>
 
 bool is_daytime
 (

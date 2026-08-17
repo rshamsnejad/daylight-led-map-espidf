@@ -1,8 +1,8 @@
+// Standard headers
 #include <time.h>
-
-#include "global.h"
-#include "wifi_setup.h"
-
+// FreeRTOS headers
+//
+// ESP-IDF headers
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "esp_netif.h"
@@ -10,6 +10,12 @@
 #include "esp_netif_sntp.h"
 #include "protocol_examples_common.h"
 #include "esp_wifi.h"
+// ESP-IDF Component headers
+//
+// Custom headers
+#include "global.h"
+#include "wifi_setup.h"
+
 
 
 void wifi_init(void)

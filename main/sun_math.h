@@ -3,9 +3,16 @@
 #define SUN_MATH_H
 ///////////////////////////////////////////////////////////
 
-#include <math.h>
+// Standard headers
 #include <time.h>
-#include "esp_err.h"
+// FreeRTOS headrs
+//
+// ESP-IDF headers
+//
+// ESP-IDF Component headers
+//
+// Custom headers
+//
 
 bool is_daytime
 (

@@ -1,19 +1,20 @@
-#include <stdio.h>
-
+// Standard headers
+//
+// FreeRTOS headers
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-
+// ESP-IDF headers
 #include "esp_log.h"
-
 #include "driver/gpio.h"
-#define STRIP_GPIO GPIO_NUM_2
-
-#include "wifi_setup.h"
-
+// ESP-IDF Component headers
+//
+// Custom headers
 #include "global.h"
 #include "led_task.h"
 #include "clock_task.h"
+#include "wifi_setup.h"
 #include "local_time.h"
+
+#define STRIP_GPIO GPIO_NUM_2
 
 void app_main()
 {

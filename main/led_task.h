@@ -3,8 +3,16 @@
 #define LED_TASK_H
 ///////////////////////////////////////////////////////////
 
+// Standard headers
+//
+// FreeRTOS headers
+//
+// ESP-IDF headers
 #include "driver/gpio.h"
+// ESP-IDF Component headers
 #include "led_strip.h"
+// Custom headers
+//
 
 typedef struct led_strip_parameters_t
 {

@@ -3,8 +3,16 @@
 #define NEOPIXEL_MATRIX_H
 ///////////////////////////////////////////////////////////
 
+// Standard headers
+//
+// FreeRTOS headers
+//
+// ESP-IDF headers
 #include "esp_err.h"
-#include "global.h"
+// ESP-IDF Component headers
+//
+// Custom headers
+//
 
 typedef struct xy_to_index_args_t
 {
