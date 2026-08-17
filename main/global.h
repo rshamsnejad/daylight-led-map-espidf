@@ -10,7 +10,6 @@
 #define NUM_LEDS MATRIX_WIDTH*MATRIX_HEIGHT
 
 static const char *TAG = "DLM_DBG";
-static bool INIT = true;
 
 ///////////////////////////////////////////////////////////
 #endif // GLOBAL_H

@@ -52,6 +52,4 @@ void app_main()
     //     5,              // priority
     //     NULL);          // out pointer to task handle
 
-
-    INIT = false;
 }

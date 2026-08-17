@@ -72,13 +72,6 @@ void led_task(void *pvParameter)
         uint32_t delay_seconds = (uint32_t)(target - now_utc);
         // uint32_t delay_seconds = 5;
 
-        ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
-
-        if(!INIT)
-        {
-            vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
-        }
-
         ESP_LOGI(TAG, "Redrawing map...");
 
         led_task_parameters_t* args = (led_task_parameters_t*)pvParameter;
@@ -111,6 +104,9 @@ void led_task(void *pvParameter)
 
         led_strip_refresh(led_strip);
         ESP_LOGI(TAG, "Map drawn.");
+        
+        ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
+        vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
     }
 
     vTaskDelete(NULL);
