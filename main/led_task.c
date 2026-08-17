@@ -10,6 +10,7 @@
 #include "led_task.h"
 #include "neopixel_matrix.h"
 #include "sun_math.h"
+#include "local_time.h"
 
 void led_task_init(void *pvParameter)
 {
@@ -40,24 +41,16 @@ void led_task_init(void *pvParameter)
 
 void led_task(void *pvParameter)
 {
-    while(1) {
+    while(1)
+    {
         time_t now_utc;
-        struct tm now_local_tm;
-        struct tm target_tm;
-
-        // Get current system time
         time(&now_utc);
-        // Set local timezone
-        // setenv("TZ", "Europe/Paris", 1);
-        setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
-        tzset();
-        // Get localtime
-        localtime_r(&now_utc, &now_local_tm);
+        struct tm now_local_tm = get_local_time(now_utc);
 
         ESP_LOGI(TAG, "Current system time : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
 
         // Target = Every hour o'clock
-        target_tm = now_local_tm;
+        struct tm target_tm = now_local_tm;
         target_tm.tm_min  = 0;
         target_tm.tm_sec  = 0;
 
