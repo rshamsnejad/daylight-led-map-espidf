@@ -9,6 +9,10 @@
 #define MATRIX_HEIGHT 16
 #define NUM_LEDS MATRIX_WIDTH*MATRIX_HEIGHT
 
+#define LED_STRIP_PIN GPIO_NUM_2
+#define CENTRALCLOCK_CLK_PIN GPIO_NUM_4
+#define CENTRALCLOCK_DIO_PIN GPIO_NUM_5
+
 static const char *TAG = "DLM_DBG";
 
 ///////////////////////////////////////////////////////////

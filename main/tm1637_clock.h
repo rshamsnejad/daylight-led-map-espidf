@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-#ifndef CLOCK_TASK_H
-#define CLOCK_TASK_H
+#ifndef TM1637_CLOCK_H
+#define TM1637_CLOCK_H
 ///////////////////////////////////////////////////////////
 
 // Standard headers
@@ -14,20 +14,16 @@
 // Custom headers
 //
 
-typedef struct clock_task_init_parameters_t
+static tm1637_handle_t central_clock;
+esp_err_t tm1637_clock_init(gpio_num_t CLK_pin, gpio_num_t DIO_pin);
+
+typedef struct tm1637_clock_parameters_t
 {
     tm1637_handle_t handle;
-} clock_task_init_parameters_t;
+} tm1637_clock_parameters_t;
 
-void clock_task_init(void *pvParameter);
-
-typedef struct clock_task_parameters_t
-{
-    tm1637_handle_t handle;
-} clock_task_parameters_t;
-
-void clock_task(void *pvParameter);
+esp_err_t tm1637_refresh(void);
 
 ///////////////////////////////////////////////////////////
-#endif // CLOCK_TASK_H
+#endif // TM1637_CLOCK_H
 ///////////////////////////////////////////////////////////

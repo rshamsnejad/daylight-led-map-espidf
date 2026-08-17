@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-#ifndef LOCAL_TIME_H
-#define LOCAL_TIME_H
+#ifndef HOURLY_TASK_H
+#define HOURLY_TASK_H
 ///////////////////////////////////////////////////////////
 
 // Standard headers
@@ -14,8 +14,10 @@
 // Custom headers
 //
 
-struct tm get_local_time(time_t now);
+esp_err_t hourly_task_init(void);
+void hourly_task(void* pvParameter);
+void wait_until_next_hour(void);
 
 ///////////////////////////////////////////////////////////
-#endif // LOCAL_TIME_H
+#endif // HOURLY_TASK_H
 ///////////////////////////////////////////////////////////
