@@ -16,7 +16,7 @@
 
 esp_err_t DLM_task_init(void);
 void DLM_task(void* pvParameter);
-void wait_until_next_minute(void);
+void wait_until_target(struct tm target_tm);
 
 ///////////////////////////////////////////////////////////
 #endif // HOURLY_TASK_H

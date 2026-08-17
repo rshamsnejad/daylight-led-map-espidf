@@ -40,37 +40,35 @@ void DLM_task(void* pvParameter)
 {
     ESP_LOGI(TAG, "Starting DLM_task()");
 
+    struct tm next_minute;
+
     while(true)
     {
         led_refresh();
         tm1637_refresh();
 
-        wait_until_next_minute();
+        next_minute = get_local_time(time(NULL));
+        next_minute.tm_sec = 0;
+        next_minute.tm_min += 1;
+
+        wait_until_target(next_minute);
     }
 
     ESP_LOGI(TAG, "Exiting DLM_task()");
     vTaskDelete(NULL);
 }
 
-void wait_until_next_minute(void)
+void wait_until_target(struct tm target_tm)
 {
     time_t now_utc = time(NULL);
-    struct tm now_local_tm = get_local_time(now_utc);
-
-    // Target = Every minute
-    struct tm target_tm = now_local_tm;
-    target_tm.tm_sec  = 0;
-
     time_t target = mktime(&target_tm);
 
-    // If it has already passed, schedule the next one.
-    if (target <= now_utc) {
-        target_tm.tm_min += 1;
-        target = mktime(&target_tm);
+    if (target > now_utc)
+    {
+        uint32_t delay_seconds = (uint32_t)(target - now_utc);
+        ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
+        vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
     }
-    uint32_t delay_seconds = (uint32_t)(target - now_utc);
-    ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
-    vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
 }
 
 void DLM_task_deinit(tm1637_handle_t central_clock)
