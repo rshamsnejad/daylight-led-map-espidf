@@ -8,13 +8,13 @@
 // ESP-IDF Component headers
 //
 // Custom headers
-#include "hourly_task.h"
+#include "DLM_task.h"
 #include "global.h"
 #include "local_time.h"
 #include "led_matrix.h"
 #include "tm1637_clock.h"
 
-esp_err_t hourly_task_init(void)
+esp_err_t DLM_task_init(void)
 {
     esp_err_t error_code = ESP_OK;
 
@@ -36,9 +36,9 @@ esp_err_t hourly_task_init(void)
     return ESP_OK;
 }
 
-void hourly_task(void* pvParameter)
+void DLM_task(void* pvParameter)
 {
-    ESP_LOGI(TAG, "Starting hourly_task()");
+    ESP_LOGI(TAG, "Starting DLM_task()");
 
     while(true)
     {
@@ -48,7 +48,7 @@ void hourly_task(void* pvParameter)
         wait_until_next_hour();
     }
 
-    ESP_LOGI(TAG, "Exiting hourly_task()");
+    ESP_LOGI(TAG, "Exiting DLM_task()");
     vTaskDelete(NULL);
 }
 
@@ -74,7 +74,7 @@ void wait_until_next_hour(void)
     vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
 }
 
-void hourly_task_deinit(tm1637_handle_t central_clock)
+void DLM_task_deinit(tm1637_handle_t central_clock)
 {
     tm1637_deinit(central_clock);
 }
