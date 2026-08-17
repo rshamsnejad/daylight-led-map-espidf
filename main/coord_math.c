@@ -27,6 +27,10 @@ esp_err_t xy_to_index
     {
         return ESP_ERR_INVALID_ARG;
     }
+    if(square_split_x && (width % 2 == 1))
+    {
+        return ESP_ERR_INVALID_ARG;
+    }
 
     if(flip_x)
     {
