@@ -45,28 +45,27 @@ void DLM_task(void* pvParameter)
         led_refresh();
         tm1637_refresh();
 
-        wait_until_next_hour();
+        wait_until_next_minute();
     }
 
     ESP_LOGI(TAG, "Exiting DLM_task()");
     vTaskDelete(NULL);
 }
 
-void wait_until_next_hour(void)
+void wait_until_next_minute(void)
 {
     time_t now_utc = time(NULL);
     struct tm now_local_tm = get_local_time(now_utc);
 
-    // Target = Every hour o'clock
+    // Target = Every minute
     struct tm target_tm = now_local_tm;
-    target_tm.tm_min  = 0;
     target_tm.tm_sec  = 0;
 
     time_t target = mktime(&target_tm);
 
-    // If o'clock has already passed, schedule next o'clock.
+    // If it has already passed, schedule the next one.
     if (target <= now_utc) {
-        target_tm.tm_hour += 1;
+        target_tm.tm_min += 1;
         target = mktime(&target_tm);
     }
     uint32_t delay_seconds = (uint32_t)(target - now_utc);
