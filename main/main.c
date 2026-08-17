@@ -14,7 +14,8 @@
 
 void app_main()
 {
-    // wifi_setup();
+    wifi_init();
+    sync_time();
 
     led_strip_parameters_t* p_strip_parameters = malloc(sizeof(led_strip_parameters_t));
     *p_strip_parameters = (led_strip_parameters_t){
@@ -43,11 +44,14 @@ void app_main()
     
     clock_task_init(NULL);
 
-    xTaskCreate(
-        &clock_task,      // task function
-        "clock_task", // task name
-        2048,           // stack size in words
-        NULL,  // pointer to parameters
-        5,              // priority
-        NULL);          // out pointer to task handle
+    // xTaskCreate(
+    //     &clock_task,      // task function
+    //     "clock_task", // task name
+    //     2048,           // stack size in words
+    //     NULL,  // pointer to parameters
+    //     5,              // priority
+    //     NULL);          // out pointer to task handle
+
+
+    INIT = false;
 }

@@ -1,3 +1,5 @@
+#include <time.h>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
@@ -6,6 +8,8 @@
 
 #include "global.h"
 #include "led_task.h"
+#include "neopixel_matrix.h"
+#include "sun_math.h"
 
 void led_task_init(void *pvParameter)
 {
@@ -36,56 +40,77 @@ void led_task_init(void *pvParameter)
 
 void led_task(void *pvParameter)
 {
+    while(1) {
+        time_t now_utc;
+        struct tm now_local_tm;
+        struct tm target_tm;
 
-    led_strip_clear(led_strip);
-    led_task_parameters_t* args = (led_task_parameters_t*)pvParameter;
+        // Get current system time
+        time(&now_utc);
+        // Set local timezone
+        // setenv("TZ", "Europe/Paris", 1);
+        setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
+        tzset();
+        // Get localtime
+        localtime_r(&now_utc, &now_local_tm);
 
-    uint8_t on = 0;
-    uint32_t count = 0;
+        ESP_LOGI(TAG, "Current system time : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
 
-    while(1){
-        if(on){
+        // Target = Every hour o'clock
+        target_tm = now_local_tm;
+        target_tm.tm_min  = 0;
+        target_tm.tm_sec  = 0;
 
-            // // Display Magenta => Yellow rainbow arc
-            // int red = 0, green = 0, blue = 0;
+        time_t target = mktime(&target_tm);
 
-            // for(int i = 0 ; i < 512 ; i += 1)
-            // {
-            //     if(i < 256)
-            //     {
-            //         red = 255;
-            //         green = 0;
-            //         blue = 255 - i;
-            //     }
-            //     else
-            //     {
-            //         red = 255;
-            //         green = i - 256;
-            //         blue = 0;
-            //     }
-
-            //     led_strip_set_pixel(led_strip, i, red, green, blue);
-            // }
-            
-            // // Display black to white gradient
-            // for(int i = 0 ; i < 512 ; i += 1)
-            // {
-            //     int j = i >= 256 ? i - 256 : i;
-
-            //     led_strip_set_pixel(led_strip, i, j, j, j);
-            // }
-
-            // Display passed colors
-            led_strip_set_pixel(led_strip, args->index + count, args->red, args->green, args->blue);
-            count += 1;
+        // If o'clock has already passed, schedule next o'clock.
+        if (target <= now_utc) {
+            target_tm.tm_hour += 1;
+            target = mktime(&target_tm);
         }
-        else{
-            led_strip_clear(led_strip);
+
+        uint32_t delay_seconds = (uint32_t)(target - now_utc);
+        // uint32_t delay_seconds = 5;
+
+        ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
+
+        if(!INIT)
+        {
+            vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
         }
+
+        ESP_LOGI(TAG, "Redrawing map...");
+
+        led_task_parameters_t* args = (led_task_parameters_t*)pvParameter;
+
+        xy_to_lonlat_args_t coords = {};
+        xy_to_index_args_t  index = {};
+
+        // Uncomment if flashing once on update is what you want
+        // instead of a fast transition
+        //
+        //led_strip_clear(led_strip);
+        for(uint32_t y = 0 ; y < MATRIX_HEIGHT ; y += 1)
+        {
+            for(uint32_t x = 0 ; x < MATRIX_WIDTH ; x += 1)
+            {
+                ESP_ERROR_CHECK(xy_to_lonlat(&coords, x, y, MATRIX_WIDTH, MATRIX_HEIGHT));
+                ESP_ERROR_CHECK(xy_to_index(&index, x, y, MATRIX_WIDTH, MATRIX_HEIGHT, false, true, false, true, true));
+
+                if(is_daytime(coords.longitude, coords.latitude, now_utc))
+                {
+                    led_strip_set_pixel(led_strip, index.index, 255, 249, 121);
+                }
+                else
+                {
+                    led_strip_set_pixel(led_strip, index.index, 81, 72, 178);
+                }
+                // ESP_LOGI(TAG, "(%d, %d) %d (%f N, %f E)", x, y, index.index, coords.latitude, coords.longitude);
+            }
+        }
+
         led_strip_refresh(led_strip);
-        on = !on;
-
-        vTaskDelay(args->blink_time / portTICK_PERIOD_MS);
+        ESP_LOGI(TAG, "Map drawn.");
     }
 
     vTaskDelete(NULL);

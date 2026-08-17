@@ -4,3 +4,5 @@ cmake_minimum_required(VERSION 3.22)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(daylight-led-map-v2)
+
+set(EXTRA_COMPONENT_DIRS components)

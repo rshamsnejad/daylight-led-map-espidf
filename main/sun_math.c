@@ -6,50 +6,37 @@
 #include "global.h"
 #include "sun_math.h"
 
-esp_err_t sun_position
+#include <libnova/libnova.h>
+
+bool is_daytime
 (
-    sun_position_parameters_t* return_struct,
-    time_t* now
+    double longitude,
+    double latitude,
+    time_t timestamp
 )
 {
-    time_t utc_time = time(now);
-    struct tm* local_time = localtime(&utc_time);
+    struct ln_lnlat_posn observer = {
+        .lng = longitude,
+        .lat = latitude
+    };
 
-    uint32_t N = local_time->tm_yday;
-    double hour = local_time->tm_hour + local_time->tm_min / 60.0 + local_time->tm_sec / 3600.0;
+    struct ln_equ_posn sun_equatorial_position;
+    struct ln_hrz_posn sun_horizontal_position;
 
-    // Fractional year in radians
-    double gamma = 2.0 * M_PI / 365.0 * (N - 1.0 + hour / 24.0);
+    /* Convert Unix timestamp to Julian Day. */
+    double julian_day = ln_get_julian_from_timet(&timestamp);
 
-    // Equation of Time (in minutes)
-    double EoT =
-        229.18 *
-        (
-            0.000075
-            + 0.001868 * cos(gamma)
-            - 0.032077 * sin(gamma)
-            - 0.014615 * cos(2.0 * gamma)
-            - 0.040849 * sin(2.0 * gamma)
-        );
+    /* Get Sun's apparent equatorial coordinates. */
+    ln_get_solar_equ_coords(julian_day, &sun_equatorial_position);
 
-    // Solar declination (in radians)
-    double delta =
-        0.006918
-        - 0.399912 * cos(gamma)
-        + 0.070257 * sin(gamma)
-        - 0.006758 * cos(2.0 * gamma)
-        + 0.000907 * sin(2.0 * gamma)
-        - 0.002697 * cos(3.0 * gamma)
-        + 0.00148  * sin(3.0 * gamma);
+    /* Convert equatorial coordinates to horizontal coordinates. */
+    ln_get_hrz_from_equ(&sun_equatorial_position, &observer, julian_day, &sun_horizontal_position);
 
-    // Subsolar longitude (in degrees [-180 , 180])
-    double subsolar_lon =
-        fmod( (180.0 - (hour * 15.0 + EoT * 0.25)), 360.0) - 180.0;
-
-    return_struct->delta = delta;
-    return_struct->subsolar_lon = subsolar_lon;
-
-    return ESP_OK;
+    /*
+     * Sun altitude > 0 means the geometric center of the Sun
+     * is above the mathematical horizon.
+     */
+    return sun_horizontal_position.alt > 0.0;
 }
 
 double degrees_to_radians
@@ -58,18 +45,4 @@ double degrees_to_radians
 )
 {
     return (degrees * (M_PI / 180.0));
-}
-
-uint8_t is_daytime
-(
-    double lon,
-    double lat,
-    double delta,
-    double lambda_s
-)
-{
-    double H = degrees_to_radians(lon - lambda_s);
-    double cos_chi = sin(- lat) * sin(delta) + cos(- lat) * cos(delta) * cos(H);
-
-    return cos_chi <= 0;
 }

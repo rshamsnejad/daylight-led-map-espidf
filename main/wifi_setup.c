@@ -1,3 +1,5 @@
+#include <time.h>
+
 #include "global.h"
 #include "wifi_setup.h"
 
@@ -5,11 +7,12 @@
 #include "nvs_flash.h"
 #include "esp_netif.h"
 #include "esp_event.h"
-
+#include "esp_netif_sntp.h"
 #include "protocol_examples_common.h"
 #include "esp_wifi.h"
 
-void wifi_setup(void)
+
+void wifi_init(void)
 {
     // System initialization
 	ESP_ERROR_CHECK(nvs_flash_init());
@@ -27,7 +30,34 @@ void wifi_setup(void)
 	ESP_LOG_BUFFER_CHAR("SSID", ap_info.ssid, sizeof(ap_info.ssid));
 	ESP_LOGI(TAG, "Primary Channel: %d", ap_info.primary);
 	ESP_LOGI(TAG, "RSSI: %d", ap_info.rssi);
-
+}
+void wifi_free(void)
+{
 	// Disconnect from Wi-Fi
 	ESP_ERROR_CHECK(example_disconnect());
+}
+
+esp_err_t sync_time(void)
+{
+    esp_sntp_config_t config =
+        ESP_NETIF_SNTP_DEFAULT_CONFIG("pool.ntp.org");
+
+    ESP_ERROR_CHECK(esp_netif_sntp_init(&config));
+
+    ESP_LOGI(TAG, "Waiting for NTP time synchronization...");
+
+    esp_err_t err = esp_netif_sntp_sync_wait(pdMS_TO_TICKS(10000));
+
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "NTP synchronization failed: %s",
+                 esp_err_to_name(err));
+        return err;
+    }
+
+    time_t now;
+    time(&now);
+
+    ESP_LOGI(TAG, "Time synchronized: %s", ctime(&now));
+
+    return ESP_OK;
 }

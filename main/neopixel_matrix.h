@@ -18,11 +18,11 @@ esp_err_t xy_to_index
     uint32_t            y,
     uint32_t            width,
     uint32_t            height,
-    BOOL_T              zigzag,
-    BOOL_T              row_major,
-    BOOL_T              flip_x,
-    BOOL_T              flip_y,
-    BOOL_T              square_split_x
+    bool                zigzag,
+    bool                row_major,
+    bool                flip_x,
+    bool                flip_y,
+    bool                square_split_x
 );
 
 typedef struct xy_to_lonlat_args_t

@@ -5,19 +5,12 @@
 
 #define BLINK_GPIO 2
 
-#ifndef BOOL_T
-    #define BOOL_T uint8_t
-#endif
-
-#ifndef FALSE
-    #define FALSE 0
-#endif
-
-#ifndef TRUE
-    #define TRUE 1
-#endif
+#define MATRIX_WIDTH 32
+#define MATRIX_HEIGHT 16
+#define NUM_LEDS MATRIX_WIDTH*MATRIX_HEIGHT
 
 static const char *TAG = "DLM_DBG";
+static bool INIT = true;
 
 ///////////////////////////////////////////////////////////
 #endif // GLOBAL_H

@@ -9,11 +9,11 @@ esp_err_t xy_to_index
     uint32_t            y,
     uint32_t            width,
     uint32_t            height,
-    BOOL_T              zigzag,
-    BOOL_T              row_major,
-    BOOL_T              flip_x,
-    BOOL_T              flip_y,
-    BOOL_T              square_split_x
+    bool                zigzag,
+    bool                row_major,
+    bool                flip_x,
+    bool                flip_y,
+    bool                square_split_x
 )
 {
     if(x >= width || y >= height)
@@ -31,7 +31,7 @@ esp_err_t xy_to_index
     }
 
     uint32_t base = 0;
-    uint32_t offset = 0;
+    int32_t offset = 0;
     uint32_t compute_width = width;
 
     if(square_split_x)
@@ -97,8 +97,8 @@ esp_err_t xy_to_lonlat(
     uint32_t             height
 )
 {
-    double x_norm = x / width;
-    double y_norm = y / height;
+    double x_norm = (double)x / (double)width;
+    double y_norm = (double)y / (double)height;
     
     double lon = x_norm * 360.0 - 180.0;
     double lat = y_norm * 180.0 - 90.0;

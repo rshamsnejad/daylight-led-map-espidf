@@ -3,7 +3,11 @@
 #define WIFI_SETUP_H
 ///////////////////////////////////////////////////////////
 
-void wifi_setup(void);
+#include "esp_err.h"
+
+void wifi_init(void);
+void wifi_free(void);
+esp_err_t sync_time(void);
 
 ///////////////////////////////////////////////////////////
 #endif // WIFI_SETUP_H
