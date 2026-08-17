@@ -3,6 +3,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "esp_log.h"
+
 #include "driver/gpio.h"
 #define STRIP_GPIO GPIO_NUM_2
 
@@ -11,11 +13,17 @@
 #include "global.h"
 #include "led_task.h"
 #include "clock_task.h"
+#include "local_time.h"
 
 void app_main()
 {
     wifi_init();
     sync_time();
+    
+    time_t utc_now;
+    time(&utc_now);
+    struct tm now_local_tm = get_local_time(utc_now);
+    ESP_LOGI(TAG, "Current system time : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
 
     led_strip_parameters_t* p_strip_parameters = malloc(sizeof(led_strip_parameters_t));
     *p_strip_parameters = (led_strip_parameters_t){
@@ -44,12 +52,12 @@ void app_main()
     
     clock_task_init(NULL);
 
-    // xTaskCreate(
-    //     &clock_task,      // task function
-    //     "clock_task", // task name
-    //     2048,           // stack size in words
-    //     NULL,  // pointer to parameters
-    //     5,              // priority
-    //     NULL);          // out pointer to task handle
+    xTaskCreate(
+        &clock_task,      // task function
+        "clock_task", // task name
+        2048,           // stack size in words
+        NULL,  // pointer to parameters
+        5,              // priority
+        NULL);          // out pointer to task handle
 
 }

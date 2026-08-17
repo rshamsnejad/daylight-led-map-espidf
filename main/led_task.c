@@ -47,8 +47,6 @@ void led_task(void *pvParameter)
         time(&now_utc);
         struct tm now_local_tm = get_local_time(now_utc);
 
-        ESP_LOGI(TAG, "Current system time : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
-
         // Target = Every hour o'clock
         struct tm target_tm = now_local_tm;
         target_tm.tm_min  = 0;
