@@ -70,8 +70,3 @@ void wait_until_target(struct tm target_tm)
         vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
     }
 }
-
-void DLM_task_deinit(tm1637_handle_t central_clock)
-{
-    tm1637_deinit(central_clock);
-}
