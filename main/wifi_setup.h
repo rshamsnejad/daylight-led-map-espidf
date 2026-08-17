@@ -14,8 +14,8 @@
 // Custom headers
 //
 
-void wifi_init(void);
-void wifi_free(void);
+esp_err_t wifi_init(void);
+esp_err_t wifi_free(void);
 esp_err_t sync_time(void);
 
 ///////////////////////////////////////////////////////////

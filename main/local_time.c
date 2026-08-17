@@ -16,10 +16,6 @@ struct tm get_local_time(time_t now)
 
     // Get current system time
     time(&now);
-    // Set local timezone
-    // setenv("TZ", "Europe/Paris", 1);
-    setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
-    tzset();
     // Get localtime
     localtime_r(&now, &now_local_tm);
 

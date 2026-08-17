@@ -9,6 +9,7 @@
 //
 // Custom headers
 #include "global.h"
+#include "system_init.h"
 #include "led_task.h"
 #include "clock_task.h"
 #include "wifi_setup.h"
@@ -18,14 +19,8 @@
 
 void app_main()
 {
-    wifi_init();
-    sync_time();
+    ESP_ERROR_CHECK(system_init());
     
-    time_t utc_now;
-    time(&utc_now);
-    struct tm now_local_tm = get_local_time(utc_now);
-    ESP_LOGI(TAG, "Current system time : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
-
     led_strip_parameters_t* p_strip_parameters = malloc(sizeof(led_strip_parameters_t));
     *p_strip_parameters = (led_strip_parameters_t){
         .led_gpio = STRIP_GPIO

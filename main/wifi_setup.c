@@ -18,7 +18,7 @@
 
 
 
-void wifi_init(void)
+esp_err_t wifi_init(void)
 {
     // System initialization
 	ESP_ERROR_CHECK(nvs_flash_init());
@@ -36,11 +36,15 @@ void wifi_init(void)
 	ESP_LOG_BUFFER_CHAR("SSID", ap_info.ssid, sizeof(ap_info.ssid));
 	ESP_LOGI(TAG, "Primary Channel: %d", ap_info.primary);
 	ESP_LOGI(TAG, "RSSI: %d", ap_info.rssi);
+
+    return ESP_OK;
 }
-void wifi_free(void)
+esp_err_t wifi_free(void)
 {
 	// Disconnect from Wi-Fi
 	ESP_ERROR_CHECK(example_disconnect());
+
+    return ESP_OK;
 }
 
 esp_err_t sync_time(void)
