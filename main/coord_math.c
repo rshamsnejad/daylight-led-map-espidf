@@ -7,7 +7,7 @@
 // ESP-IDF Component headers
 //
 // Custom headers
-#include "neopixel_matrix.h"
+#include "coord_math.h"
 
 esp_err_t xy_to_index
 (

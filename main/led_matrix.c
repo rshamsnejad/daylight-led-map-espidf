@@ -9,7 +9,7 @@
 // Custom headers
 #include "global.h"
 #include "led_matrix.h"
-#include "neopixel_matrix.h"
+#include "coord_math.h"
 #include "sun_math.h"
 #include "local_time.h"
 
