@@ -14,9 +14,9 @@
 
 void app_main()
 {
+    ESP_ERROR_CHECK(DLM_task_init());
     ESP_ERROR_CHECK(system_init());
     
-    ESP_ERROR_CHECK(DLM_task_init());
     xTaskCreate(
         &DLM_task,      // task function
         "DLM_task",     // task name

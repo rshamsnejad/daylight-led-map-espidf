@@ -25,9 +25,12 @@ esp_err_t tm1637_clock_init(gpio_num_t CLK_pin, gpio_num_t DIO_pin)
     if(error_code != ESP_OK)
         return error_code;
     
-    error_code = tm1637_set_brightness(central_clock, 7, false);
+    error_code = tm1637_set_brightness(central_clock, 7, true);
     if(error_code != ESP_OK)
         return error_code;
+    
+    tm1637_write_string(central_clock, " HI ");
+
 
     return ESP_OK;
 }

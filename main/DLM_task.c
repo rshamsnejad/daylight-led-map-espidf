@@ -16,6 +16,7 @@
 
 esp_err_t DLM_task_init(void)
 {
+    ESP_LOGI(TAG, "Starting DLM_task_init()");
     esp_err_t error_code = ESP_OK;
 
     led_strip_parameters_t strip_parameters =
@@ -31,8 +32,7 @@ esp_err_t DLM_task_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
-    tm1637_write_string(central_clock, "Hi !");
-
+    ESP_LOGI(TAG, "Exiting DLM_task_init()");
     return ESP_OK;
 }
 
