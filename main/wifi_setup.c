@@ -10,12 +10,13 @@
 #include "esp_netif_sntp.h"
 #include "protocol_examples_common.h"
 #include "esp_wifi.h"
+#include "esp_sntp.h"
 // ESP-IDF Component headers
 //
 // Custom headers
 #include "global.h"
 #include "wifi_setup.h"
-
+#include "local_time.h"
 
 
 esp_err_t wifi_init(void)
@@ -47,7 +48,7 @@ esp_err_t wifi_free(void)
     return ESP_OK;
 }
 
-esp_err_t sync_time(void)
+esp_err_t timesync_init(void)
 {
     esp_sntp_config_t config =
         ESP_NETIF_SNTP_DEFAULT_CONFIG("pool.ntp.org");
@@ -64,10 +65,10 @@ esp_err_t sync_time(void)
         return err;
     }
 
-    time_t now;
-    time(&now);
+    struct tm now_tm = get_local_time(time(NULL));
 
-    ESP_LOGI(TAG, "Time synchronized: %s", ctime(&now));
+    ESP_LOGI(TAG, "Initial NTP sync : %02d:%02d", now_tm.tm_hour, now_tm.tm_min);
+    ESP_LOGI(TAG, "NTP sync interval is %d s", esp_sntp_get_sync_interval()/1000);
 
     return ESP_OK;
 }

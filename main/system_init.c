@@ -26,7 +26,7 @@ esp_err_t system_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
-    error_code = sync_time();
+    error_code = timesync_init();
     if(error_code != ESP_OK)
         return error_code;
 

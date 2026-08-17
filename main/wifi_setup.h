@@ -16,7 +16,7 @@
 
 esp_err_t wifi_init(void);
 esp_err_t wifi_free(void);
-esp_err_t sync_time(void);
+esp_err_t timesync_init(void);
 
 ///////////////////////////////////////////////////////////
 #endif // WIFI_SETUP_H
