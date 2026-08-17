@@ -40,13 +40,6 @@ esp_err_t wifi_init(void)
 
     return ESP_OK;
 }
-esp_err_t wifi_free(void)
-{
-	// Disconnect from Wi-Fi
-	ESP_ERROR_CHECK(example_disconnect());
-
-    return ESP_OK;
-}
 
 esp_err_t timesync_init(void)
 {
@@ -65,7 +58,7 @@ esp_err_t timesync_init(void)
         return err;
     }
 
-    struct tm now_tm = get_local_time(time(NULL));
+    struct tm now_tm = get_local_time_struct(time(NULL));
 
     ESP_LOGI(TAG, "Initial NTP sync : %02d:%02d", now_tm.tm_hour, now_tm.tm_min);
     ESP_LOGI(TAG, "NTP sync interval is %d s", esp_sntp_get_sync_interval()/1000);

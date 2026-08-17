@@ -14,7 +14,8 @@
 // Custom headers
 //
 
-struct tm get_local_time(time_t now);
+/// @brief Converts the current UTC timestamp to current local time struct
+struct tm get_local_time_struct(time_t now);
 
 ///////////////////////////////////////////////////////////
 #endif // LOCAL_TIME_H

@@ -13,7 +13,7 @@
 #include "sun_math.h"
 #include "local_time.h"
 
-esp_err_t led_matrix_init(led_strip_parameters_t args)
+esp_err_t led_matrix_init(led_matrix_init_args_t args)
 {
     /// LED strip common configuration
     led_strip_config_t strip_config = {

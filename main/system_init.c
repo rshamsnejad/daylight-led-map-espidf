@@ -32,7 +32,7 @@ esp_err_t system_init(void)
 
     time_t utc_now;
     time(&utc_now);
-    struct tm now_local_tm = get_local_time(utc_now);
+    struct tm now_local_tm = get_local_time_struct(utc_now);
     ESP_LOGI(TAG, "Local time at boot : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
 
     return ESP_OK;

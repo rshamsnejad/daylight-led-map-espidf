@@ -19,7 +19,7 @@ esp_err_t DLM_task_init(void)
     ESP_LOGI(TAG, "Starting DLM_task_init()");
     esp_err_t error_code = ESP_OK;
 
-    led_strip_parameters_t strip_parameters =
+    led_matrix_init_args_t strip_parameters =
     {
         .led_gpio = LED_STRIP_PIN
     };
@@ -28,7 +28,7 @@ esp_err_t DLM_task_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
-    error_code = tm1637_clock_init(CENTRALCLOCK_CLK_PIN, CENTRALCLOCK_DIO_PIN);
+    error_code = central_clock_init(CENTRALCLOCK_CLK_PIN, CENTRALCLOCK_DIO_PIN);
     if(error_code != ESP_OK)
         return error_code;
 
@@ -47,7 +47,7 @@ void DLM_task(void* pvParameter)
         tm1637_refresh();
         led_refresh();
 
-        next_minute = get_local_time(time(NULL));
+        next_minute = get_local_time_struct(time(NULL));
         next_minute.tm_sec = 0;
         next_minute.tm_min += 1;
 

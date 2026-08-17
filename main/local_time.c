@@ -10,7 +10,7 @@
 // Custom headers
 #include "local_time.h"
 
-struct tm get_local_time(time_t now)
+struct tm get_local_time_struct(time_t now)
 {
     struct tm now_local_tm;
 

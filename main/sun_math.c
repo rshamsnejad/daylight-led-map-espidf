@@ -41,11 +41,3 @@ bool is_daytime
      */
     return sun_horizontal_position.alt > 0.0;
 }
-
-double degrees_to_radians
-(
-    double degrees
-)
-{
-    return (degrees * (M_PI / 180.0));
-}

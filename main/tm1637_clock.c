@@ -11,7 +11,7 @@
 #include "tm1637_clock.h"
 #include "local_time.h"
 
-esp_err_t tm1637_clock_init(gpio_num_t CLK_pin, gpio_num_t DIO_pin)
+esp_err_t central_clock_init(gpio_num_t CLK_pin, gpio_num_t DIO_pin)
 {
     esp_err_t error_code = ESP_OK;
     
@@ -46,7 +46,7 @@ esp_err_t tm1637_refresh(void)
         return error_code;
     
     time_t now_utc = time(NULL);
-    struct tm now_local_tm = get_local_time(now_utc);
+    struct tm now_local_tm = get_local_time_struct(now_utc);
     
     // Format: HH:MM (use colon segment if available)
     uint8_t time_display[4];

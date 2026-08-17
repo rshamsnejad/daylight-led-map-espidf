@@ -12,6 +12,10 @@
 #include "system_init.h"
 #include "DLM_task.h"
 
+/// @brief Program entry point
+/// This ESP32 firmware is for the Daylight LED Map (DLM),
+/// a real-time physical map showing where it is day and night
+/// on a PlateCarree map
 void app_main()
 {
     ESP_ERROR_CHECK(DLM_task_init());
