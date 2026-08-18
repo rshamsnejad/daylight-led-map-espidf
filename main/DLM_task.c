@@ -60,6 +60,8 @@ void DLM_task(void* pvParameter)
 
 void wait_until_target(struct tm target_tm)
 {
+    DLM_previous_wake_time = xTaskGetTickCount();
+
     time_t now_utc = time(NULL);
     time_t target = mktime(&target_tm);
 
@@ -67,6 +69,6 @@ void wait_until_target(struct tm target_tm)
     {
         uint32_t delay_seconds = (uint32_t)(target - now_utc);
         ESP_LOGI(TAG, "Waiting %d seconds until target time", delay_seconds);
-        vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000));
+        vTaskDelayUntil(&DLM_previous_wake_time, pdMS_TO_TICKS(delay_seconds * 1000));
     }
 }
