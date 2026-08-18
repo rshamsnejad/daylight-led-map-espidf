@@ -36,12 +36,28 @@
     },
     {
       "type": "wokwi-tm1637-7segment",
-      "id": "clock",
+      "id": "central_clock",
       "top": 200,
       "left": -300,
       "attrs": {
         "color": "yellow"
       }
+    },
+    {
+      "type": "wokwi-74hc595",
+      "id": "date_register_1",
+      "top": 500,
+      "left": -400
+    },
+    {
+      "type": "wokwi-7segment",
+      "id": "date_display_1",
+      "top": 400,
+      "left": -360,
+      "attrs": {
+        "digits": "4"
+      }
+
     }
   ],
   "connections": [
@@ -53,10 +69,21 @@
     ["esp:5V.1",     "matrix2:VDD",       "red",    []],
     ["esp:2",        "matrix1:DIN",       "green",  []],
     ["matrix1:DOUT", "matrix2:DIN",       "purple", ["*", "v10"]],
-    ["esp:5V.1",     "clock:VCC",         "red",    ["*", "h100"]],
-    ["esp:GND.1",    "clock:GND",         "black",  ["*", "h110"]],
-    ["esp:4",       "clock:CLK",         "yellow",  ["*", "h230"]],
-    ["esp:5",       "clock:DIO",         "green",   ["*", "h240"]]
+    ["esp:5V.1",     "central_clock:VCC", "red",    ["*", "h100"]],
+    ["esp:GND.5",    "central_clock:GND", "black",  ["*", "h110"]],
+    ["esp:4",        "central_clock:CLK", "yellow",  ["*", "h230"]],
+    ["esp:5",        "central_clock:DIO", "green",   ["*", "h240"]],
+    ["esp:5V.1",     "date_register_1:VCC", "red", []],
+    ["esp:GND.5",     "date_register_1:GND", "black", ["h-20", "v10", "*"]],
+    ["esp:GND.5",     "date_register_1:OE", "black", ["h-20", "v10", "*", "v-10"]],
+    ["date_register_1:Q0", "date_display_1:A", "purple", ["v-120", "h10", "*"]],
+    ["date_register_1:Q1", "date_display_1:B", "purple", ["h-10", "v-170", "h10", "*"]],
+    ["date_register_1:Q2", "date_display_1:C", "purple", ["v60", "h10", "*"]],
+    ["date_register_1:Q3", "date_display_1:D", "purple", ["v50", "h10", "*"]],
+    ["date_register_1:Q4", "date_display_1:E", "purple", ["v40", "h10", "*"]],
+    ["date_register_1:Q5", "date_display_1:F", "purple", ["v30", "h200", "v-170", "h-10", "*"]],
+    ["date_register_1:Q6", "date_display_1:G", "purple", ["v20", "h10", "*"]],
+    ["date_register_1:Q7", "date_display_1:DP", "purple", ["v10", "h10", "*"]]
   ],
   "dependencies": {}
 }
