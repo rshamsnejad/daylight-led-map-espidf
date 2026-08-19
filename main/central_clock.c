@@ -8,7 +8,7 @@
 #include "tm1637.h"
 // Custom headers
 #include "global.h"
-#include "tm1637_clock.h"
+#include "central_clock.h"
 #include "local_time.h"
 
 esp_err_t central_clock_init(gpio_num_t CLK_pin, gpio_num_t DIO_pin)

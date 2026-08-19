@@ -12,7 +12,7 @@
 #include "global.h"
 #include "local_time.h"
 #include "led_matrix.h"
-#include "tm1637_clock.h"
+#include "central_clock.h"
 
 esp_err_t DLM_task_init(void)
 {
