@@ -16,7 +16,7 @@
 
 /// @brief Initializer for refresh_task()
 /// @return ESP error code
-esp_err_t refresh_task_init(void);
+esp_err_t peripherals_init(void);
 
 static TickType_t DLM_previous_wake_time;
 

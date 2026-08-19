@@ -18,7 +18,9 @@
 /// on a PlateCarree map
 void app_main()
 {
-    ESP_ERROR_CHECK(refresh_task_init());
+    // Initializes the LED matrix, TM1637 clocks and 74HC595 clock
+    ESP_ERROR_CHECK(peripherals_init());
+    // Initializes the system components (Wifi, NTP etc)
     ESP_ERROR_CHECK(system_init());
     
     xTaskCreate(
