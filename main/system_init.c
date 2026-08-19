@@ -22,11 +22,11 @@ esp_err_t system_init(void)
 
     esp_err_t error_code = ESP_OK;
 
-    // error_code =  wifi_init();
+    error_code =  wifi_init();
     if(error_code != ESP_OK)
         return error_code;
 
-    // error_code = timesync_init();
+    error_code = timesync_init();
     if(error_code != ESP_OK)
         return error_code;
 

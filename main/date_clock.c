@@ -32,7 +32,6 @@ void date_clock_refresh(void)
     uint8_t data[] = {0x0};
     size_t size = sizeof(data);
 
-    for(;;){
     for(uint8_t i = 0 ; i <= 15 ; i += 1)
     {
         data[0] = LU_7segment[i];
@@ -40,7 +39,7 @@ void date_clock_refresh(void)
 
         ESP_LOGI(TAG, "data = %d (0x%X)", i, data[0]);
         vTaskDelay(pdMS_TO_TICKS(500));
-    }}
+    }
     
     ESP_LOGI(TAG, "Date clock refreshed");
 }

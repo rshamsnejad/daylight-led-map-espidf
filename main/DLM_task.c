@@ -47,8 +47,8 @@ void DLM_task(void* pvParameter)
 
     while(true)
     {
-        // tm1637_refresh();
-        // led_refresh();
+        tm1637_refresh();
+        led_refresh();
         date_clock_refresh();
 
         next_minute = get_local_time_struct(time(NULL));
