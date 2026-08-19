@@ -3,87 +3,107 @@
   "author": "Uri Shaked",
   "editor": "wokwi",
   "parts": [
-    {
-      "type": "board-esp32-c3-devkitm-1",
-      "id": "esp",
-      "top": 0,
-      "left": 0,
-      "attrs": {}
-    },
+    { "type": "board-esp32-c3-devkitm-1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
     {
       "type": "wokwi-neopixel-canvas",
       "id": "matrix1",
       "top": -400,
       "left": -600,
-      "rotate": 0,
-      "attrs": {
-        "rows": "16",
-        "cols": "16",
-        "pixelate": "circle"
-      }
+      "attrs": { "rows": "16", "cols": "16", "pixelate": "circle" }
     },
     {
       "type": "wokwi-neopixel-canvas",
       "id": "matrix2",
       "top": -400,
       "left": -230,
-      "rotate": 0,
-      "attrs": {
-        "rows": "16",
-        "cols": "16",
-        "pixelate": "circle"
-      }
+      "attrs": { "rows": "16", "cols": "16", "pixelate": "circle" }
     },
     {
       "type": "wokwi-tm1637-7segment",
       "id": "central_clock",
       "top": 200,
       "left": -300,
-      "attrs": {
-        "color": "yellow"
-      }
+      "attrs": { "color": "yellow" }
     },
     {
       "type": "wokwi-74hc595",
       "id": "date_register_1",
-      "top": 500,
-      "left": -400
+      "top": 613.2,
+      "left": -349.76,
+      "attrs": {}
     },
     {
       "type": "wokwi-7segment",
       "id": "date_display_1",
-      "top": 400,
-      "left": -360,
-      "attrs": {
-        "digits": "4"
-      }
-
+      "top": 408.18,
+      "left": -311.72,
+      "attrs": { "digits": "1", "color": "#00ddff", "colon": "", "common": "anode" }
     }
   ],
   "connections": [
-    ["esp:TX",       "$serialMonitor:RX", "",       []],
-    ["esp:RX",       "$serialMonitor:TX", "",       []],
-    ["esp:GND.1",    "matrix1:VSS",       "black",  []],
-    ["esp:GND.1",    "matrix2:VSS",       "black",  []],
-    ["esp:5V.1",     "matrix1:VDD",       "red",    []],
-    ["esp:5V.1",     "matrix2:VDD",       "red",    []],
-    ["esp:2",        "matrix1:DIN",       "green",  []],
-    ["matrix1:DOUT", "matrix2:DIN",       "purple", ["*", "v10"]],
-    ["esp:5V.1",     "central_clock:VCC", "red",    ["*", "h100"]],
-    ["esp:GND.5",    "central_clock:GND", "black",  ["*", "h110"]],
-    ["esp:4",        "central_clock:CLK", "yellow",  ["*", "h230"]],
-    ["esp:5",        "central_clock:DIO", "green",   ["*", "h240"]],
-    ["esp:5V.1",     "date_register_1:VCC", "red", []],
-    ["esp:GND.5",     "date_register_1:GND", "black", ["h-20", "v10", "*"]],
-    ["esp:GND.5",     "date_register_1:OE", "black", ["h-20", "v10", "*", "v-10"]],
-    ["date_register_1:Q0", "date_display_1:A", "purple", ["v-120", "h10", "*"]],
-    ["date_register_1:Q1", "date_display_1:B", "purple", ["h-10", "v-170", "h10", "*"]],
-    ["date_register_1:Q2", "date_display_1:C", "purple", ["v60", "h10", "*"]],
-    ["date_register_1:Q3", "date_display_1:D", "purple", ["v50", "h10", "*"]],
-    ["date_register_1:Q4", "date_display_1:E", "purple", ["v40", "h10", "*"]],
-    ["date_register_1:Q5", "date_display_1:F", "purple", ["v30", "h200", "v-170", "h-10", "*"]],
-    ["date_register_1:Q6", "date_display_1:G", "purple", ["v20", "h10", "*"]],
-    ["date_register_1:Q7", "date_display_1:DP", "purple", ["v10", "h10", "*"]]
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.1", "matrix1:VSS", "black", [] ],
+    [ "esp:GND.1", "matrix2:VSS", "black", [] ],
+    [ "esp:5V.1", "matrix1:VDD", "red", [] ],
+    [ "esp:5V.1", "matrix2:VDD", "red", [] ],
+    [ "esp:2", "matrix1:DIN", "green", [] ],
+    [ "matrix1:DOUT", "matrix2:DIN", "purple", [ "*", "v10" ] ],
+    [ "esp:5V.1", "central_clock:VCC", "red", [ "h-118.98", "v113.34" ] ],
+    [ "esp:4", "central_clock:CLK", "yellow", [ "*", "h230" ] ],
+    [ "esp:5", "central_clock:DIO", "green", [ "*", "h240" ] ],
+    [ "esp:5V.1", "date_register_1:VCC", "red", [] ],
+    [ "esp:GND.5", "central_clock:GND", "black", [ "h-109.38", "v103.74" ] ],
+    [ "date_register_1:GND", "esp:GND.5", "black", [ "v9.6", "h268.8", "v-479.7" ] ],
+    [ "date_register_1:OE", "esp:GND.5", "black", [ "v-8.4", "h307.2", "v-441.3" ] ],
+    [ "date_register_1:MR", "esp:5V.1", "red", [ "v-18", "h-57.6", "v-460.5" ] ],
+    [ "date_register_1:Q0", "date_display_1:A", "orange", [ "v-229.2", "h57.6" ] ],
+    [
+      "date_register_1:Q1",
+      "date_display_1:B",
+      "orange",
+      [ "v9.6", "h-9.6", "v-278.4", "h86.4" ]
+    ],
+    [
+      "date_register_1:Q2",
+      "date_display_1:C",
+      "orange",
+      [ "v67.2", "h115.2", "v-192", "h-57.6" ]
+    ],
+    [
+      "date_register_1:Q3",
+      "date_display_1:D",
+      "orange",
+      [ "v57.6", "h86.4", "v-172.8", "h-57.6" ]
+    ],
+    [
+      "date_register_1:Q4",
+      "date_display_1:E",
+      "orange",
+      [ "v48", "h67.2", "v-153.6", "h-57.6" ]
+    ],
+    [
+      "date_register_1:Q5",
+      "date_display_1:F",
+      "orange",
+      [ "v38.4", "h48", "v-124.8", "h-67.2", "v-163.2", "h28.8" ]
+    ],
+    [
+      "date_register_1:Q6",
+      "date_display_1:G",
+      "orange",
+      [ "v28.8", "h28.8", "v-124.8", "h-48", "v-144", "h9.6" ]
+    ],
+    [
+      "date_register_1:Q7",
+      "date_display_1:DP",
+      "orange",
+      [ "v19.2", "h76.8", "v-153.6", "h-57.6" ]
+    ],
+    [ "esp:7", "date_register_1:STCP", "gold", [ "v-0.3", "h42.94", "v489.6", "h-441.6" ] ],
+    [ "date_register_1:SHCP", "esp:8", "gold", [ "v-27.6", "h441.6", "v-518.1" ] ],
+    [ "date_register_1:DS", "esp:6", "green", [ "v-46.8", "h451.2", "v-470.1" ] ],
+    [ "date_display_1:COM.1", "esp:5V.1", "red", [ "v9.6", "h268.8", "v-354.9" ] ]
   ],
   "dependencies": {}
 }

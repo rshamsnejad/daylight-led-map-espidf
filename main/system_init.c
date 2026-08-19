@@ -20,13 +20,13 @@ esp_err_t system_init(void)
     setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
     tzset();
 
-    esp_err_t error_code;
+    esp_err_t error_code = ESP_OK;
 
-    error_code =  wifi_init();
+    // error_code =  wifi_init();
     if(error_code != ESP_OK)
         return error_code;
 
-    error_code = timesync_init();
+    // error_code = timesync_init();
     if(error_code != ESP_OK)
         return error_code;
 

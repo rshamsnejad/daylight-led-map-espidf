@@ -5,6 +5,8 @@ dependencies:
     ^3.0.0
   heronet/tm1637:
     ^1.0.2
+  esp-idf-lib/shiftregister:
+    ^1.0.0
   michmich/esp-idf-wifi-provisioner:
     ^0.4.0
   protocol_examples_common:

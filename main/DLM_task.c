@@ -13,6 +13,7 @@
 #include "local_time.h"
 #include "led_matrix.h"
 #include "central_clock.h"
+#include "date_clock.h"
 
 esp_err_t DLM_task_init(void)
 {
@@ -32,6 +33,8 @@ esp_err_t DLM_task_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
+    date_clock_init();
+
     ESP_LOGI(TAG, "Exiting DLM_task_init()");
     return ESP_OK;
 }
@@ -44,8 +47,9 @@ void DLM_task(void* pvParameter)
 
     while(true)
     {
-        tm1637_refresh();
-        led_refresh();
+        // tm1637_refresh();
+        // led_refresh();
+        date_clock_refresh();
 
         next_minute = get_local_time_struct(time(NULL));
         next_minute.tm_sec = 0;
