@@ -8,16 +8,16 @@
 // ESP-IDF Component headers
 //
 // Custom headers
-#include "DLM_task.h"
+#include "refresh_task.h"
 #include "global.h"
 #include "local_time.h"
 #include "led_matrix.h"
 #include "central_clock.h"
 #include "date_clock.h"
 
-esp_err_t DLM_task_init(void)
+esp_err_t refresh_task_init(void)
 {
-    ESP_LOGI(TAG, "Starting DLM_task_init()");
+    ESP_LOGI(TAG, "Starting refresh_task_init()");
     esp_err_t error_code = ESP_OK;
 
     led_matrix_init_args_t strip_parameters =
@@ -35,13 +35,13 @@ esp_err_t DLM_task_init(void)
 
     date_clock_init();
 
-    ESP_LOGI(TAG, "Exiting DLM_task_init()");
+    ESP_LOGI(TAG, "Exiting refresh_task_init()");
     return ESP_OK;
 }
 
-void DLM_task(void* pvParameter)
+void refresh_task(void* pvParameter)
 {
-    ESP_LOGI(TAG, "Starting DLM_task()");
+    ESP_LOGI(TAG, "Starting refresh_task()");
 
     struct tm next_minute;
 
@@ -58,7 +58,7 @@ void DLM_task(void* pvParameter)
         wait_until_target(next_minute);
     }
 
-    ESP_LOGI(TAG, "Exiting DLM_task()");
+    ESP_LOGI(TAG, "Exiting refresh_task()");
     vTaskDelete(NULL);
 }
 

@@ -14,15 +14,15 @@
 // Custom headers
 //
 
-/// @brief Initializer for DLM_task()
+/// @brief Initializer for refresh_task()
 /// @return ESP error code
-esp_err_t DLM_task_init(void);
+esp_err_t refresh_task_init(void);
 
 static TickType_t DLM_previous_wake_time;
 
 /// @brief Main task responsible for refreshing the display
 /// @param pvParameter Pointer to args
-void DLM_task(void* pvParameter);
+void refresh_task(void* pvParameter);
 
 /// @brief Waits until system time reaches the desired time of day
 /// @param target_tm The target time

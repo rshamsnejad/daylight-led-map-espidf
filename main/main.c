@@ -10,7 +10,7 @@
 // Custom headers
 #include "global.h"
 #include "system_init.h"
-#include "DLM_task.h"
+#include "refresh_task.h"
 
 /// @brief Program entry point
 /// This ESP32 firmware is for the Daylight LED Map (DLM),
@@ -18,12 +18,12 @@
 /// on a PlateCarree map
 void app_main()
 {
-    ESP_ERROR_CHECK(DLM_task_init());
+    ESP_ERROR_CHECK(refresh_task_init());
     ESP_ERROR_CHECK(system_init());
     
     xTaskCreate(
-        &DLM_task,      // task function
-        "DLM_task",     // task name
+        &refresh_task,      // task function
+        "refresh_task",     // task name
         2048,           // stack size in words
         NULL,           // pointer to parameters
         5,              // priority
