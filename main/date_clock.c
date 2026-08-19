@@ -41,32 +41,6 @@ void date_clock_refresh(void)
         ESP_LOGI(TAG, "data = %d (0x%X)", i, data[0]);
         vTaskDelay(pdMS_TO_TICKS(500));
     }}
-    // /* all pins == HIGH */
-    // data[0] = 0xf;
-    // ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
-
-    // /* all pins == LOW */
-    // data[0] = 0x0;
-    // ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
-    // vTaskDelay(1000);
-
-    // /* last bit == HIGH */
-    // data[0] = 0x1;
-    // ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
-
-    // for(int i = 0 ; i < 10 ; i += 1)
-    // {
-    //     vTaskDelay(1000);
-
-    //     /* left-shift */
-    //     data[0] = data[0] << 1;
-    //     if (data[0] == 0) {
-    //         data[0] = 0x1;
-    //     }
-
-    //     /* transfer */
-    //     ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
-    // }
     
     ESP_LOGI(TAG, "Date clock refreshed");
 }
