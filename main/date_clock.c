@@ -33,13 +33,13 @@ void date_clock_refresh(void)
     size_t size = sizeof(data);
 
     for(;;){
-    for(uint8_t i = 0 ; i <= 1 ; i += 1)
+    for(uint8_t i = 0 ; i <= 15 ; i += 1)
     {
         data[0] = LU_7segment[i];
         ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
 
-        ESP_LOGI(TAG, "data = %d", data[0]);
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        ESP_LOGI(TAG, "data = %d (0x%X)", i, data[0]);
+        vTaskDelay(pdMS_TO_TICKS(500));
     }}
     // /* all pins == HIGH */
     // data[0] = 0xf;
