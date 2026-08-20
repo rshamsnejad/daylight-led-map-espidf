@@ -29,16 +29,17 @@ void date_clock_refresh(void)
 {
     ESP_LOGI(TAG, "Refreshing date clock");
 
-    uint8_t data[] = {0x0};
-    size_t size = sizeof(data);
+    uint8_t digit_code[] = { 0x0 };
+    uint8_t digit_position[] = { 0xFF };
 
     for(uint8_t i = 0 ; i <= 15 ; i += 1)
     {
-        data[0] = LU_7segment[i];
-        ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, data, size));
+        digit_code[0] = LU_7segment[i];
+        ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, digit_position, sizeof(digit_position)));
+        ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, digit_code, sizeof(digit_code)));
 
-        ESP_LOGI(TAG, "data = %d (0x%X)", i, data[0]);
-        vTaskDelay(pdMS_TO_TICKS(500));
+        ESP_LOGI(TAG, "digit_code = %d (0x%X)", i, digit_code[0]);
+        vTaskDelay(pdMS_TO_TICKS(200));
     }
     
     ESP_LOGI(TAG, "Date clock refreshed");

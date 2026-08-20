@@ -28,16 +28,30 @@
     {
       "type": "wokwi-74hc595",
       "id": "date_register_1",
-      "top": 613.2,
-      "left": -349.76,
+      "top": 747.6,
+      "left": -503.36,
       "attrs": {}
     },
     {
       "type": "wokwi-7segment",
       "id": "date_display_1",
-      "top": 408.18,
-      "left": -311.72,
-      "attrs": { "digits": "1", "color": "#00ddff", "colon": "", "common": "anode" }
+      "top": 418.62,
+      "left": -469.28,
+      "attrs": { "digits": "4", "color": "#00ddff", "colon": "", "common": "anode" }
+    },
+    {
+      "type": "wokwi-7segment",
+      "id": "date_display_2",
+      "top": 418.62,
+      "left": -277.28,
+      "attrs": { "digits": "4", "color": "#00ddff", "colon": "", "common": "anode" }
+    },
+    {
+      "type": "wokwi-74hc595",
+      "id": "date_register_2",
+      "top": 747.6,
+      "left": -282.56,
+      "attrs": {}
     }
   ],
   "connections": [
@@ -54,16 +68,9 @@
     [ "esp:5", "central_clock:DIO", "green", [ "*", "h240" ] ],
     [ "esp:5V.1", "date_register_1:VCC", "red", [] ],
     [ "esp:GND.5", "central_clock:GND", "black", [ "h-109.38", "v103.74" ] ],
-    [ "date_register_1:GND", "esp:GND.5", "black", [ "v9.6", "h268.8", "v-479.7" ] ],
-    [ "date_register_1:OE", "esp:GND.5", "black", [ "v-8.4", "h307.2", "v-441.3" ] ],
-    [ "date_register_1:MR", "esp:5V.1", "red", [ "v-18", "h-57.6", "v-460.5" ] ],
-    [ "date_register_1:Q0", "date_display_1:A", "orange", [ "v-229.2", "h57.6" ] ],
-    [
-      "date_register_1:Q1",
-      "date_display_1:B",
-      "orange",
-      [ "v9.6", "h-9.6", "v-278.4", "h86.4" ]
-    ],
+    [ "date_register_1:GND", "esp:GND.5", "black", [ "v9.6", "h422.4", "v-633.3" ] ],
+    [ "date_register_1:Q0", "date_display_1:A", "orange", [ "v-382.8", "h96" ] ],
+    [ "date_register_1:Q1", "date_display_1:B", "orange", [ "v9.6", "h-9.6", "v-432", "h153.6" ] ],
     [
       "date_register_1:Q2",
       "date_display_1:C",
@@ -86,24 +93,74 @@
       "date_register_1:Q5",
       "date_display_1:F",
       "orange",
-      [ "v38.4", "h48", "v-124.8", "h-67.2", "v-163.2", "h28.8" ]
+      [ "v38.4", "h48", "v-307.2", "h-67.2", "v-134.4", "h96" ]
+    ],
+    [ "date_register_1:Q6", "date_display_1:G", "orange", [ "v28.8", "h86.4", "v-144" ] ],
+    [ "date_register_1:Q7", "date_display_1:DP", "orange", [ "v19.2", "h57.6", "v-153.6" ] ],
+    [ "date_register_1:DS", "esp:6", "green", [ "v-66", "h604.8", "v-585.3" ] ],
+    [ "date_display_1:COM.1", "esp:5V.1", "red", [ "v9.6", "h268.8", "v-354.9" ] ],
+    [ "date_display_2:A", "date_display_1:A", "orange", [ "v-57.6", "h-192" ] ],
+    [ "date_display_1:F", "date_display_2:F", "orange", [ "v-48", "h192" ] ],
+    [ "date_display_1:B", "date_display_2:B", "orange", [ "v-67.2", "h192" ] ],
+    [ "date_display_1:E", "date_display_2:E", "orange", [ "v8.76", "h192.01", "v-9.6" ] ],
+    [ "date_display_1:D", "date_display_2:D", "orange", [ "v18.36", "h192" ] ],
+    [ "date_display_1:DP", "date_display_2:DP", "orange", [ "v27.96", "h192" ] ],
+    [ "date_display_1:C", "date_display_2:C", "orange", [ "v37.56", "h192" ] ],
+    [ "date_display_1:G", "date_display_2:G", "orange", [ "v47.16", "h201.6" ] ],
+    [ "date_register_2:GND", "esp:GND.5", "black", [ "v9.6", "h201.6", "v-633.3" ] ],
+    [ "date_register_1:OE", "date_register_1:GND", "black", [ "v-8.4", "h48", "v48", "h-9.6" ] ],
+    [ "date_register_2:OE", "date_register_2:GND", "black", [ "v-8.4", "h48", "v48", "h-9.6" ] ],
+    [ "date_register_1:VCC", "date_register_1:MR", "red", [ "v-18", "h57.6" ] ],
+    [ "date_register_2:VCC", "esp:5V.1", "red", [ "v-18", "h259.2", "v-594.9" ] ],
+    [ "date_register_2:STCP", "esp:7", "gold", [ "v-46.8", "h374.4", "v-614.1" ] ],
+    [ "esp:8", "date_register_2:SHCP", "gold", [ "h52.54", "v642.9", "h-374.4" ] ],
+    [ "date_register_1:SHCP", "date_register_2:SHCP", "gold", [ "v-37.2", "h220.8" ] ],
+    [ "date_register_1:STCP", "date_register_2:STCP", "gold", [ "v-46.8", "h220.8" ] ],
+    [ "date_register_1:Q7S", "date_register_2:DS", "green", [ "v-27.6", "h144", "h28.8" ] ],
+    [
+      "date_register_2:Q0",
+      "date_display_1:DIG1",
+      "blue",
+      [ "v-142.8", "h-259.2", "v-192", "h124.79" ]
+    ],
+    [ "date_register_2:MR", "date_register_2:VCC", "red", [ "v-18", "h-57.6" ] ],
+    [
+      "date_register_2:Q1",
+      "date_display_1:DIG2",
+      "blue",
+      [ "v19.2", "h-9.6", "v-182.4", "h-249.6", "v-211.2", "h163.2" ]
     ],
     [
-      "date_register_1:Q6",
-      "date_display_1:G",
-      "orange",
-      [ "v28.8", "h28.8", "v-124.8", "h-48", "v-144", "h9.6" ]
+      "date_register_2:Q2",
+      "date_display_1:DIG3",
+      "blue",
+      [ "v28.8", "h-28.8", "v-182.4", "h-249.6", "v-230.4", "h182.4" ]
     ],
     [
-      "date_register_1:Q7",
-      "date_display_1:DP",
-      "orange",
-      [ "v19.2", "h76.8", "v-153.6", "h-57.6" ]
+      "date_register_2:Q3",
+      "date_display_1:DIG4",
+      "blue",
+      [ "v38.4", "h-48", "v-182.4", "h-48" ]
     ],
-    [ "esp:7", "date_register_1:STCP", "gold", [ "v-0.3", "h42.94", "v489.6", "h-441.6" ] ],
-    [ "date_register_1:SHCP", "esp:8", "gold", [ "v-27.6", "h441.6", "v-518.1" ] ],
-    [ "date_register_1:DS", "esp:6", "green", [ "v-46.8", "h451.2", "v-470.1" ] ],
-    [ "date_display_1:COM.1", "esp:5V.1", "red", [ "v9.6", "h268.8", "v-354.9" ] ]
+    [
+      "date_register_2:Q4",
+      "date_display_2:DIG1",
+      "blue",
+      [ "v48", "h192", "v-432", "h-153.61" ]
+    ],
+    [
+      "date_register_2:Q5",
+      "date_display_2:DIG2",
+      "blue",
+      [ "v38.4", "h172.8", "v-412.8", "h-115.2" ]
+    ],
+    [
+      "date_register_2:Q6",
+      "date_display_2:DIG3",
+      "blue",
+      [ "v28.8", "h153.6", "v-393.6", "h-96" ]
+    ],
+    [ "date_register_2:Q7", "date_display_2:DIG4", "blue", [ "v19.2", "h57.6" ] ]
   ],
   "dependencies": {}
 }
