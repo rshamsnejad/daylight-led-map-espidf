@@ -15,9 +15,9 @@
 #include "central_clock.h"
 #include "date_clock.h"
 
-esp_err_t refresh_task_init(void)
+esp_err_t peripherals_init(void)
 {
-    ESP_LOGI(TAG, "Starting refresh_task_init()");
+    ESP_LOGI(TAG, "Starting peripherals_init()");
     esp_err_t error_code = ESP_OK;
 
     led_matrix_init_args_t strip_parameters =
@@ -35,7 +35,7 @@ esp_err_t refresh_task_init(void)
 
     date_clock_init();
 
-    ESP_LOGI(TAG, "Exiting refresh_task_init()");
+    ESP_LOGI(TAG, "Exiting peripherals_init()");
     return ESP_OK;
 }
 

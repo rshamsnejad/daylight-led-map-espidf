@@ -52,6 +52,70 @@
       "top": 747.6,
       "left": -282.56,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 561.6,
+      "left": -538.15,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 561.6,
+      "left": -518.95,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 561.6,
+      "left": -442.15,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": 561.6,
+      "left": -432.55,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r5",
+      "top": 561.6,
+      "left": -422.95,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r6",
+      "top": 561.6,
+      "left": -413.35,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r7",
+      "top": 561.6,
+      "left": -403.75,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r8",
+      "top": 561.6,
+      "left": -394.15,
+      "rotate": 90,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
@@ -69,35 +133,7 @@
     [ "esp:5V.1", "date_register_1:VCC", "red", [] ],
     [ "esp:GND.5", "central_clock:GND", "black", [ "h-109.38", "v103.74" ] ],
     [ "date_register_1:GND", "esp:GND.5", "black", [ "v9.6", "h422.4", "v-633.3" ] ],
-    [ "date_register_1:Q0", "date_display_1:A", "orange", [ "v-382.8", "h96" ] ],
-    [ "date_register_1:Q1", "date_display_1:B", "orange", [ "v9.6", "h-9.6", "v-432", "h153.6" ] ],
-    [
-      "date_register_1:Q2",
-      "date_display_1:C",
-      "orange",
-      [ "v67.2", "h115.2", "v-192", "h-57.6" ]
-    ],
-    [
-      "date_register_1:Q3",
-      "date_display_1:D",
-      "orange",
-      [ "v57.6", "h86.4", "v-172.8", "h-57.6" ]
-    ],
-    [
-      "date_register_1:Q4",
-      "date_display_1:E",
-      "orange",
-      [ "v48", "h67.2", "v-153.6", "h-57.6" ]
-    ],
-    [
-      "date_register_1:Q5",
-      "date_display_1:F",
-      "orange",
-      [ "v38.4", "h48", "v-307.2", "h-67.2", "v-134.4", "h96" ]
-    ],
-    [ "date_register_1:Q6", "date_display_1:G", "orange", [ "v28.8", "h86.4", "v-144" ] ],
-    [ "date_register_1:Q7", "date_display_1:DP", "orange", [ "v19.2", "h57.6", "v-153.6" ] ],
-    [ "date_register_1:DS", "esp:6", "green", [ "v-66", "h604.8", "v-585.3" ] ],
+    [ "date_register_1:DS", "esp:6", "green", [ "v-56.4", "h604.8", "v-594.9" ] ],
     [ "date_display_1:COM.1", "esp:5V.1", "red", [ "v9.6", "h268.8", "v-354.9" ] ],
     [ "date_display_2:A", "date_display_1:A", "orange", [ "v-57.6", "h-192" ] ],
     [ "date_display_1:F", "date_display_2:F", "orange", [ "v-48", "h192" ] ],
@@ -160,7 +196,23 @@
       "blue",
       [ "v28.8", "h153.6", "v-393.6", "h-96" ]
     ],
-    [ "date_register_2:Q7", "date_display_2:DIG4", "blue", [ "v19.2", "h57.6" ] ]
+    [ "date_register_2:Q7", "date_display_2:DIG4", "blue", [ "v19.2", "h57.6" ] ],
+    [ "date_display_1:B", "r1:1", "orange", [ "v-67.2", "h-153.6", "v307.2" ] ],
+    [ "r1:2", "date_register_1:Q1", "orange", [ "v190.8", "h9.6" ] ],
+    [ "r2:1", "date_display_1:A", "orange", [ "v-172.8", "h96" ] ],
+    [ "date_register_1:Q0", "r2:2", "orange", [ "v0" ] ],
+    [ "date_register_1:Q5", "r3:2", "orange", [ "v38.4", "h48", "v-133.2" ] ],
+    [ "date_display_1:F", "r3:1", "orange", [ "v-48", "h-96", "v134.4", "h67.2" ] ],
+    [ "date_register_1:Q4", "r4:2", "orange", [ "v48", "h67.2" ] ],
+    [ "date_display_1:E", "r4:1", "orange", [ "v0" ] ],
+    [ "date_register_1:Q3", "r5:2", "orange", [ "v57.6", "h86.4" ] ],
+    [ "r5:1", "date_display_1:D", "orange", [ "h0" ] ],
+    [ "date_register_1:Q7", "r6:2", "orange", [ "v19.2", "h57.6" ] ],
+    [ "r6:1", "date_display_1:DP", "orange", [ "h0" ] ],
+    [ "r7:2", "date_register_1:Q2", "orange", [ "h0", "v248.4", "h-115.2" ] ],
+    [ "r8:2", "date_register_1:Q6", "orange", [ "h0", "v210", "h-86.4" ] ],
+    [ "r7:1", "date_display_1:C", "orange", [ "h0" ] ],
+    [ "r8:1", "date_display_1:G", "orange", [ "h0" ] ]
   ],
   "dependencies": {}
 }
