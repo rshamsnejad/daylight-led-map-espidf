@@ -14,11 +14,11 @@
 void date_clock_init(void)
 {
     /* configure GPIOs */
-    date_clock_config.data_io_num = GPIO_NUM_6;
-    date_clock_config.clk_io_num = GPIO_NUM_8;
-    date_clock_config.rclk_io_num = GPIO_NUM_7;
-    date_clock_config.srclr_io_num = GPIO_NUM_1;
-    date_clock_config.oe_io_num = GPIO_NUM_3;
+    date_clock_config.data_io_num = DATECLOCK_DIO_PIN;
+    date_clock_config.clk_io_num = DATECLOCK_SCLK_PIN;
+    date_clock_config.rclk_io_num = DATECLOCK_RCLK_PIN;
+    date_clock_config.srclr_io_num = DATECLOCK_SRCLR_PIN;
+    date_clock_config.oe_io_num = DATECLOCK_OE_PIN;
     date_clock_config.mode = SHIFTREGISTER_MODE_WRITE;
 
     ESP_ERROR_CHECK(shiftregister_gpio_init(&date_clock_config));

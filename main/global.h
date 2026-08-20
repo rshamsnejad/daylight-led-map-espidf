@@ -13,6 +13,12 @@
 #define CENTRALCLOCK_CLK_PIN GPIO_NUM_4
 #define CENTRALCLOCK_DIO_PIN GPIO_NUM_5
 
+#define DATECLOCK_DIO_PIN GPIO_NUM_6
+#define DATECLOCK_SCLK_PIN GPIO_NUM_8
+#define DATECLOCK_RCLK_PIN GPIO_NUM_7
+#define DATECLOCK_SRCLR_PIN GPIO_NUM_1
+#define DATECLOCK_OE_PIN GPIO_NUM_3
+
 static const char *TAG = "DLM_DBG";
 
 ///////////////////////////////////////////////////////////
