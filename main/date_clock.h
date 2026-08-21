@@ -11,18 +11,7 @@
 
 static shiftregister_config_t date_clock_config = {};
 
-static const uint8_t LU_7segment[] =
-// {
-//     0b00000000,
-//     0b10000000,
-//     0b01000000,
-//     0b00100000,
-//     0b00010000,
-//     0b00001000,
-//     0b00000100,
-//     0b00000010,
-//     0b00000001
-// };
+static const uint8_t LU_7segment_digit[] =
 {
     0b00000011, // 0 (0)
     0b10011111, // 1 (1)
@@ -41,6 +30,19 @@ static const uint8_t LU_7segment[] =
     0b01100001, // E (14)
     0b01110001, // F (15)
 };
+static const uint8_t LU_7segment_position[] =
+{
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b00000001,
+    0b10000000,
+    0b01000000,
+    0b00100000,
+    0b00010000
+};
+
+static uint8_t date_clock_digits[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 void date_clock_init(void);
 

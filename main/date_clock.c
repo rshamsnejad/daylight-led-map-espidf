@@ -10,6 +10,7 @@
 // Custom headers
 #include "global.h"
 #include "date_clock.h"
+#include "local_time.h"
 
 void date_clock_init(void)
 {
@@ -33,16 +34,27 @@ void date_clock_refresh(void)
     struct tm now_local_time_tm;
     get_current_time(&now_utc, &now_local_time_tm);
 
-    for(uint8_t i = 0 ; i <= 15 ; i += 1)
-    {
-        digit_code[0] = 0b10000000 >> (i % 8);
-        digit_code[1] = LU_7segment[i];
-        ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, digit_code, sizeof(digit_code)));
+    // uint8_t digit_code[] = { 0, 0 };
 
-        ESP_LOGI(TAG, "digit_position = %d (0x%X)", digit_code[0], digit_code[0]);
-        ESP_LOGI(TAG, "digit_code = %d (0x%X)", digit_code[1], digit_code[1]);
-        vTaskDelay(pdMS_TO_TICKS(5000));
-    }
+    // for(uint8_t i = 0 ; i <= 15 ; i += 1)
+    // {
+    //     digit_code[0] = LU_7segment_digit[i];
+    //     digit_code[1] = LU_7segment_position[i % 8];
+    //     ESP_ERROR_CHECK(shiftregister_gpio_transfer(&date_clock_config, digit_code, sizeof(digit_code)));
+
+    //     ESP_LOGI(TAG, "digit_position = %d (0x%X)", digit_code[0], digit_code[0]);
+    //     ESP_LOGI(TAG, "digit_code = %d (0x%X)", digit_code[1], digit_code[1]);
+    //     vTaskDelay(pdMS_TO_TICKS(500));
+    // }
+
+    date_clock_digits[0] = (uint8_t)(now_local_time_tm.tm_year / 1000);
+    date_clock_digits[1] = (uint8_t)((now_local_time_tm.tm_year - date_clock_digits[0]) / 100);
+    date_clock_digits[2] = (uint8_t)((now_local_time_tm.tm_year - date_clock_digits[0] - date_clock_digits[1]) / 10);
+    date_clock_digits[3] = (uint8_t)(now_local_time_tm.tm_year - date_clock_digits[0] - date_clock_digits[1] - date_clock_digits[2]);
+    date_clock_digits[4] = (uint8_t)(now_local_time_tm.tm_mon / 10);
+    date_clock_digits[5] = (uint8_t)(now_local_time_tm.tm_mon - date_clock_digits[4]);
+    date_clock_digits[6] = (uint8_t)(now_local_time_tm.tm_mday / 10);
+    date_clock_digits[7] = (uint8_t)(now_local_time_tm.tm_mday - date_clock_digits[6]);
     
     ESP_LOGI(TAG, "Date clock refreshed");
 }
