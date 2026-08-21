@@ -30,10 +30,6 @@ void date_clock_refresh(void)
 {
     ESP_LOGI(TAG, "Refreshing date clock");
 
-    time_t now_utc;
-    struct tm now_local_time_tm;
-    get_current_time(&now_utc, &now_local_time_tm);
-
     // uint8_t digit_code[] = { 0, 0 };
 
     // for(uint8_t i = 0 ; i <= 15 ; i += 1)
@@ -47,14 +43,5 @@ void date_clock_refresh(void)
     //     vTaskDelay(pdMS_TO_TICKS(500));
     // }
 
-    date_clock_digits[0] = (uint8_t)(now_local_time_tm.tm_year / 1000);
-    date_clock_digits[1] = (uint8_t)((now_local_time_tm.tm_year - date_clock_digits[0]) / 100);
-    date_clock_digits[2] = (uint8_t)((now_local_time_tm.tm_year - date_clock_digits[0] - date_clock_digits[1]) / 10);
-    date_clock_digits[3] = (uint8_t)(now_local_time_tm.tm_year - date_clock_digits[0] - date_clock_digits[1] - date_clock_digits[2]);
-    date_clock_digits[4] = (uint8_t)(now_local_time_tm.tm_mon / 10);
-    date_clock_digits[5] = (uint8_t)(now_local_time_tm.tm_mon - date_clock_digits[4]);
-    date_clock_digits[6] = (uint8_t)(now_local_time_tm.tm_mday / 10);
-    date_clock_digits[7] = (uint8_t)(now_local_time_tm.tm_mday - date_clock_digits[6]);
-    
     ESP_LOGI(TAG, "Date clock refreshed");
 }

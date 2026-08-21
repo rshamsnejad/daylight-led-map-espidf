@@ -17,6 +17,7 @@
 #include "global.h"
 #include "wifi_setup.h"
 #include "local_time.h"
+#include "date_clock_task.h"
 
 
 esp_err_t wifi_init(void)
@@ -58,9 +59,7 @@ esp_err_t timesync_init(void)
         return err;
     }
 
-    time_t now_utc;
-    struct tm now_local_time_tm;
-    get_current_time(&now_utc, &now_local_time_tm);
+    get_current_time(&now_utc, &now_local_time_tm, p_date_clock_digits);
 
     ESP_LOGI(TAG, "Initial NTP sync : %02d:%02d", now_local_time_tm.tm_hour, now_local_time_tm.tm_min);
     ESP_LOGI(TAG, "NTP sync interval is %d s", esp_sntp_get_sync_interval()/1000);

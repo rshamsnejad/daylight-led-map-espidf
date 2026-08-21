@@ -46,10 +46,6 @@ void led_refresh(void)
 {
     ESP_LOGI(TAG, "Redrawing LED map...");
 
-    time_t now_utc;
-    struct tm now_local_time_tm;
-    get_current_time(&now_utc, &now_local_time_tm);
-
     xy_to_lonlat_args_t coords = {};
     xy_to_index_args_t  index = {};
 

@@ -30,9 +30,7 @@ esp_err_t system_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
-    time_t now_utc;
-    struct tm now_local_time_tm;
-    get_current_time(&now_utc, &now_local_time_tm);
+    get_current_time(&now_utc, &now_local_time_tm, p_date_clock_digits);
     
     ESP_LOGI
     (

@@ -39,10 +39,6 @@ esp_err_t tm1637_refresh(void)
 {
     ESP_LOGI(TAG, "Updating 7-segment clock...");
 
-    time_t now_utc;
-    struct tm now_local_time_tm;
-    get_current_time(&now_utc, &now_local_time_tm);
-
     esp_err_t error_code = ESP_OK;
     
     error_code = tm1637_set_brightness(central_clock, 7, true);
