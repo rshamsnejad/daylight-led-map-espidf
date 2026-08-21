@@ -39,27 +39,28 @@ esp_err_t tm1637_refresh(void)
 {
     ESP_LOGI(TAG, "Updating 7-segment clock...");
 
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
+
     esp_err_t error_code = ESP_OK;
     
     error_code = tm1637_set_brightness(central_clock, 7, true);
     if(error_code != ESP_OK)
         return error_code;
     
-    time_t now_utc = time(NULL);
-    struct tm now_local_tm = get_local_time_struct(now_utc);
-    
     // Format: HH:MM (use colon segment if available)
     uint8_t time_display[4];
-    time_display[0] = tm1637_encode_digit(now_local_tm.tm_hour / 10);
-    time_display[1] = tm1637_encode_digit(now_local_tm.tm_hour % 10) | TM1637_SEG_DP;
-    time_display[2] = tm1637_encode_digit(now_local_tm.tm_min / 10);
-    time_display[3] = tm1637_encode_digit(now_local_tm.tm_min % 10);
+    time_display[0] = tm1637_encode_digit(now_local_time_tm.tm_hour / 10);
+    time_display[1] = tm1637_encode_digit(now_local_time_tm.tm_hour % 10) | TM1637_SEG_DP;
+    time_display[2] = tm1637_encode_digit(now_local_time_tm.tm_min / 10);
+    time_display[3] = tm1637_encode_digit(now_local_time_tm.tm_min % 10);
 
     error_code = tm1637_set_segments(central_clock, time_display, 4, 0);
     if(error_code != ESP_OK)
         return error_code;
     
-    ESP_LOGI(TAG, "TM1637 updated to : %02d:%02d", now_local_tm.tm_hour, now_local_tm.tm_min);
+    ESP_LOGI(TAG, "TM1637 updated to : %02d:%02d", now_local_time_tm.tm_hour, now_local_time_tm.tm_min);
 
     return ESP_OK;
 }

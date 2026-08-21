@@ -30,10 +30,21 @@ esp_err_t system_init(void)
     if(error_code != ESP_OK)
         return error_code;
 
-    time_t utc_now;
-    time(&utc_now);
-    struct tm now_local_tm = get_local_time_struct(utc_now);
-    ESP_LOGI(TAG, "Local time at boot : %04d-%02d-%02d %02d:%02d:%02d", now_local_tm.tm_year + 1900, now_local_tm.tm_mon + 1, now_local_tm.tm_mday, now_local_tm.tm_hour, now_local_tm.tm_min, now_local_tm.tm_sec);
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
+    
+    ESP_LOGI
+    (
+        TAG,
+        "Local time at boot : %04d-%02d-%02d %02d:%02d:%02d",
+        now_local_time_tm.tm_year + 1900,
+        now_local_time_tm.tm_mon + 1,
+        now_local_time_tm.tm_mday,
+        now_local_time_tm.tm_hour,
+        now_local_time_tm.tm_min,
+        now_local_time_tm.tm_sec
+    );
 
     return ESP_OK;
 }

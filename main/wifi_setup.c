@@ -58,9 +58,11 @@ esp_err_t timesync_init(void)
         return err;
     }
 
-    struct tm now_tm = get_local_time_struct(time(NULL));
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
 
-    ESP_LOGI(TAG, "Initial NTP sync : %02d:%02d", now_tm.tm_hour, now_tm.tm_min);
+    ESP_LOGI(TAG, "Initial NTP sync : %02d:%02d", now_local_time_tm.tm_hour, now_local_time_tm.tm_min);
     ESP_LOGI(TAG, "NTP sync interval is %d s", esp_sntp_get_sync_interval()/1000);
 
     return ESP_OK;

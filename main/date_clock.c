@@ -29,7 +29,9 @@ void date_clock_refresh(void)
 {
     ESP_LOGI(TAG, "Refreshing date clock");
 
-    uint8_t digit_code[] = { 0, 0 };
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
 
     for(uint8_t i = 0 ; i <= 15 ; i += 1)
     {

@@ -43,19 +43,23 @@ void refresh_task(void* pvParameter)
 {
     ESP_LOGI(TAG, "Starting refresh_task()");
 
-    struct tm next_minute;
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    struct tm next_minute_tm;
 
     while(true)
     {
+        get_current_time(&now_utc, &now_local_time_tm);
+
+        next_minute_tm = now_local_time_tm;
+        next_minute_tm.tm_sec = 0;
+        next_minute_tm.tm_min += 1;
+    
         tm1637_refresh();
         led_refresh();
         date_clock_refresh();
 
-        next_minute = get_local_time_struct(time(NULL));
-        next_minute.tm_sec = 0;
-        next_minute.tm_min += 1;
-
-        wait_until_target(next_minute);
+        wait_until_target(next_minute_tm);
     }
 
     ESP_LOGI(TAG, "Exiting refresh_task()");
@@ -66,7 +70,9 @@ void wait_until_target(struct tm target_tm)
 {
     DLM_previous_wake_time = xTaskGetTickCount();
 
-    time_t now_utc = time(NULL);
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
     time_t target = mktime(&target_tm);
 
     if (target > now_utc)

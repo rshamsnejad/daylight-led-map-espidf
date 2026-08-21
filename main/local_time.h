@@ -15,7 +15,7 @@
 //
 
 /// @brief Converts the current UTC timestamp to current local time struct
-struct tm get_local_time_struct(time_t now);
+void get_current_time(time_t* p_now_utc, struct tm* p_now_local_time_tm);
 
 ///////////////////////////////////////////////////////////
 #endif // LOCAL_TIME_H

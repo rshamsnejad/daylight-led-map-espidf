@@ -44,9 +44,11 @@ esp_err_t led_matrix_init(led_matrix_init_args_t args)
 
 void led_refresh(void)
 {
-    time_t now_utc = time(NULL);
-
     ESP_LOGI(TAG, "Redrawing LED map...");
+
+    time_t now_utc;
+    struct tm now_local_time_tm;
+    get_current_time(&now_utc, &now_local_time_tm);
 
     xy_to_lonlat_args_t coords = {};
     xy_to_index_args_t  index = {};
