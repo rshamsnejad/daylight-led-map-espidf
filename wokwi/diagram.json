@@ -3,7 +3,7 @@
   "author": "Uri Shaked",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-esp32-c3-devkitm-1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "board-esp32-c3-devkitm-1", "id": "esp", "top": -0.3, "left": -3.78, "attrs": {} },
     {
       "type": "wokwi-neopixel-canvas",
       "id": "matrix1",
@@ -128,12 +128,10 @@
     [ "esp:2", "matrix1:DIN", "green", [] ],
     [ "matrix1:DOUT", "matrix2:DIN", "purple", [ "*", "v10" ] ],
     [ "esp:5V.1", "central_clock:VCC", "red", [ "h-118.98", "v113.34" ] ],
-    [ "esp:4", "central_clock:CLK", "yellow", [ "*", "h230" ] ],
-    [ "esp:5", "central_clock:DIO", "green", [ "*", "h240" ] ],
     [ "esp:5V.1", "date_register_1:VCC", "red", [] ],
     [ "esp:GND.5", "central_clock:GND", "black", [ "h-109.38", "v103.74" ] ],
     [ "date_register_1:GND", "esp:GND.5", "black", [ "v9.6", "h422.4", "v-633.3" ] ],
-    [ "date_register_1:DS", "esp:6", "green", [ "v-56.4", "h604.8", "v-594.9" ] ],
+    [ "date_register_1:DS", "esp:5", "green", [ "v-56.4", "h604.8", "v-594.9" ] ],
     [ "date_display_1:COM.1", "esp:5V.1", "red", [ "v9.6", "h268.8", "v-354.9" ] ],
     [ "date_display_2:A", "date_display_1:A", "orange", [ "v-57.6", "h-192" ] ],
     [ "date_display_1:F", "date_display_2:F", "orange", [ "v-48", "h192" ] ],
@@ -149,7 +147,7 @@
     [ "date_register_1:VCC", "date_register_1:MR", "red", [ "v-18", "h57.6" ] ],
     [ "date_register_2:VCC", "esp:5V.1", "red", [ "v-18", "h259.2", "v-594.9" ] ],
     [ "date_register_2:STCP", "esp:7", "gold", [ "v-46.8", "h374.4", "v-614.1" ] ],
-    [ "esp:8", "date_register_2:SHCP", "gold", [ "h52.54", "v642.9", "h-374.4" ] ],
+    [ "esp:6", "date_register_2:SHCP", "gold", [ "h52.54", "v614.4", "h-370.62" ] ],
     [ "date_register_1:SHCP", "date_register_2:SHCP", "gold", [ "v-37.2", "h220.8" ] ],
     [ "date_register_1:STCP", "date_register_2:STCP", "gold", [ "v-46.8", "h220.8" ] ],
     [ "date_register_1:Q7S", "date_register_2:DS", "green", [ "v-27.6", "h144", "h28.8" ] ],
@@ -212,7 +210,9 @@
     [ "r7:2", "date_register_1:Q2", "orange", [ "h0", "v248.4", "h-115.2" ] ],
     [ "r8:2", "date_register_1:Q6", "orange", [ "h0", "v210", "h-86.4" ] ],
     [ "r7:1", "date_display_1:C", "orange", [ "h0" ] ],
-    [ "r8:1", "date_display_1:G", "orange", [ "h0" ] ]
+    [ "r8:1", "date_display_1:G", "orange", [ "h0" ] ],
+    [ "central_clock:DIO", "esp:0", "green", [ "h95.83", "v-142.44", "h38.4" ] ],
+    [ "central_clock:CLK", "esp:1", "gold", [ "h86.23", "v-123.24" ] ]
   ],
   "dependencies": {}
 }
