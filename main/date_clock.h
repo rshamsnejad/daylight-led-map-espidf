@@ -14,7 +14,7 @@
 // Custom headers
 //
 
-static shiftregister_config_t date_clock_config = {};
+extern shiftregister_config_t date_clock_config;
 
 static const uint8_t LU_7segment_digit[] =
 {

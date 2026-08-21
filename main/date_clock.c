@@ -12,6 +12,8 @@
 #include "date_clock.h"
 #include "local_time.h"
 
+shiftregister_config_t date_clock_config = {};
+
 void date_clock_init(void)
 {
     /* configure GPIOs */

@@ -11,6 +11,7 @@
 #include "global.h"
 #include "system_init.h"
 #include "refresh_task.h"
+#include "date_clock_task.h"
 
 /// @brief Program entry point
 /// This ESP32 firmware is for the Daylight LED Map (DLM),
@@ -26,15 +27,15 @@ void app_main()
     // The LED matrix does not need a dedicated task as it uses neopixels
     // The TM1637 clocks have their tasks started by the library
     // The 74HC595 clock needs its own task below
-    // xTaskCreate
-    // (
-    //     &date_clock_task,
-    //     "date_clock_task",
-    //     2048,
-    //     NULL,
-    //     5,
-    //     NULL
-    // );
+    xTaskCreate
+    (
+        &date_clock_task,
+        "date_clock_task",
+        2048,
+        NULL,
+        5,
+        NULL
+    );
 
     // Main task responsible for refreshing the displays
     xTaskCreate
